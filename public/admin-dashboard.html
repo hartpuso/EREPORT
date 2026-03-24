@@ -793,6 +793,135 @@ body {
     }
 }
 
+/* Edit Employee Modal */
+#edit-employee-modal.modal-overlay {
+    background: rgba(0,0,0,0.55);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+}
+
+#edit-employee-modal .modal-box {
+    background: #111;
+    width: 550px;
+    max-height: 90vh;
+    overflow-y: auto;
+    padding: 30px;
+    border-radius: 16px;
+    position: relative;
+    border: 1px solid #2a2a2a;
+    animation: editModalFadeIn .2s ease-out;
+}
+
+@keyframes editModalFadeIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+#edit-employee-modal .close-btn {
+    position: absolute;
+    top: 15px;
+    right: 18px;
+    font-size: 22px;
+    cursor: pointer;
+    color: #bbb;
+    line-height: 1;
+}
+
+#edit-employee-modal .close-btn:hover {
+    color: #fff;
+}
+
+#edit-employee-modal .modal-title {
+    font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 20px;
+}
+
+#edit-employee-modal .grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+}
+
+#edit-employee-modal .full {
+    grid-column: 1 / -1;
+}
+
+#edit-employee-modal label {
+    display: block;
+    font-size: 14px;
+    color: #bbb;
+    margin-bottom: 5px;
+}
+
+#edit-employee-modal input,
+#edit-employee-modal select {
+    width: 100%;
+    padding: 12px;
+    border-radius: 8px;
+    border: 1px solid #222;
+    background: #151515;
+    color: #fff;
+    font-size: 15px;
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+#edit-employee-modal input:focus,
+#edit-employee-modal select:focus {
+    border-color: #00c7a5;
+    box-shadow: 0 0 0 2px rgba(0, 199, 165, 0.3);
+}
+
+#edit-employee-modal .modal-actions {
+    margin-top: 25px;
+    display: flex;
+    justify-content: space-between;
+    gap: 15px;
+}
+
+#edit-employee-modal .cancel-btn {
+    flex: 1;
+    background: #222;
+    border: 1px solid #333;
+    color: #fff;
+    padding: 12px 0;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 15px;
+}
+
+#edit-employee-modal .cancel-btn:hover {
+    background: #333;
+}
+
+#edit-employee-modal .save-btn {
+    flex: 1;
+    background: #00d2ae;
+    border: none;
+    color: #000;
+    padding: 12px 0;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 15px;
+    font-weight: 700;
+}
+
+#edit-employee-modal .save-btn:hover {
+    background: #00e8bd;
+}
+
+@media (max-width: 680px) {
+    #edit-employee-modal .modal-box {
+        width: calc(100% - 20px);
+        padding: 24px 16px 16px;
+    }
+
+    #edit-employee-modal .grid {
+        grid-template-columns: 1fr;
+    }
+}
+
 </style>
 </head>
 
@@ -1008,6 +1137,70 @@ body {
     </div>
 </div>
 
+<!-- Edit Employee Modal -->
+<div class="modal-overlay" id="edit-employee-modal">
+    <div class="modal-box">
+        <span class="close-btn" onclick="closeEditEmployeeModal()">×</span>
+
+        <div class="modal-title">Edit Employee</div>
+
+        <div class="grid">
+            <div>
+                <label>First Name</label>
+                <input id="edit-first-name" type="text" />
+            </div>
+
+            <div>
+                <label>Last Name</label>
+                <input id="edit-last-name" type="text" />
+            </div>
+
+            <div class="full">
+                <label>Email Address</label>
+                <input id="edit-email" type="email" />
+            </div>
+
+            <div class="full">
+                <label>Phone Number</label>
+                <input id="edit-phone" type="text" />
+            </div>
+
+            <div>
+                <label>Department</label>
+                <select id="edit-department">
+                    <option>Engineering</option>
+                    <option>IT</option>
+                    <option>HR</option>
+                    <option>Finance</option>
+                    <option>Marketing</option>
+                    <option>Operations</option>
+                    <option>Customer Support</option>
+                    <option>Sales</option>
+                    <option>Human Resources</option>
+                </select>
+            </div>
+
+            <div>
+                <label>Position</label>
+                <input id="edit-position" type="text" />
+            </div>
+
+            <div class="full">
+                <label>Status</label>
+                <select id="edit-status">
+                    <option>Active</option>
+                    <option>Inactive</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="modal-actions">
+            <button class="cancel-btn" onclick="closeEditEmployeeModal()">Cancel</button>
+            <button class="save-btn" onclick="saveEditedEmployee()">Save Changes</button>
+        </div>
+    </div>
+</div>
+
 <!-- Complaint Modal -->
 <div class="modal-overlay" id="complaint-modal">
     <div class="modal">
@@ -1209,13 +1402,13 @@ const data = [
 ];
 
 const profiles = [
-    {name:"Maria Santos", role:"Senior Developer - Engineering", status:"Active"},
-    {name:"Juan Dela Cruz", role:"Marketing Manager - Marketing", status:"Active"},
-    {name:"Anna Reyes", role:"HR Specialist - Human Resources", status:"Inactive"},
-    {name:"Carlos Garcia", role:"Financial Analyst - Finance", status:"Active"},
-    {name:"Sofia Mendoza", role:"Operations Lead - Operations", status:"Active"},
-    {name:"Miguel Torres", role:"Support Specialist - Customer Support", status:"Active"},
-    {name:"Isabel Ramos", role:"Sales Representative - Sales", status:"Inactive"},
+    {name:"Maria Santos", role:"Senior Developer - Engineering", status:"Active", email:"maria.santos@company.com", phone:"+63 912 345 6789"},
+    {name:"Juan Dela Cruz", role:"Marketing Manager - Marketing", status:"Active", email:"juan.delacruz@company.com", phone:"+63 923 456 7890"},
+    {name:"Anna Reyes", role:"HR Specialist - Human Resources", status:"Inactive", email:"anna.reyes@company.com", phone:"+63 934 567 8901"},
+    {name:"Carlos Garcia", role:"Financial Analyst - Finance", status:"Active", email:"carlos.garcia@company.com", phone:"+63 945 678 9012"},
+    {name:"Sofia Mendoza", role:"Operations Lead - Operations", status:"Active", email:"sofia.mendoza@company.com", phone:"+63 956 789 0123"},
+    {name:"Miguel Torres", role:"Support Specialist - Customer Support", status:"Active", email:"miguel.torres@company.com", phone:"+63 967 890 1234"},
+    {name:"Isabel Ramos", role:"Sales Representative - Sales", status:"Inactive", email:"isabel.ramos@company.com", phone:"+63 978 901 2345"},
 ];
 
 const list = document.getElementById("complaint-list");
@@ -1234,6 +1427,24 @@ function getInitials(name) {
     return name.split(" ").map(n => n[0]).join("").slice(0,2).toUpperCase();
 }
 
+function splitName(fullName) {
+    const parts = fullName.trim().split(" ").filter(Boolean);
+    return {
+        firstName: parts[0] || "",
+        lastName: parts.slice(1).join(" ") || ""
+    };
+}
+
+function splitRole(role) {
+    const [positionPart, departmentPart] = role.split(" - ");
+    return {
+        position: (positionPart || "").trim(),
+        department: (departmentPart || "").trim()
+    };
+}
+
+let editingEmployeeIndex = null;
+
 function renderProfiles(data) {
     profileList.innerHTML = "";
     profileCount.textContent = `Showing ${data.length} of ${profiles.length} employees`;
@@ -1241,6 +1452,7 @@ function renderProfiles(data) {
     data.forEach(user => {
         const card = document.createElement("div");
         card.className = "profile-card";
+        const profileIndex = profiles.indexOf(user);
         card.innerHTML = `
             <div>
                 <div class="profile-left">
@@ -1251,7 +1463,10 @@ function renderProfiles(data) {
                     </div>
                 </div>
 
-                <div class="profile-details">Additional profile details can be shown here.</div>
+                <div class="profile-details">
+                    Email: ${user.email || "N/A"}<br>
+                    Phone: ${user.phone || "N/A"}
+                </div>
             </div>
 
             <div class="profile-right">
@@ -1261,7 +1476,7 @@ function renderProfiles(data) {
         `;
 
         card.addEventListener("click", () => {
-            card.classList.toggle("open");
+            openEditEmployeeModal(profileIndex);
         });
 
         profileList.appendChild(card);
@@ -1343,7 +1558,9 @@ function addEmployee() {
     const newUser = {
         name: `${firstName} ${lastName}`,
         role: `${position} - ${department}`,
-        status: status
+        status: status,
+        email: email,
+        phone: document.getElementById("phone").value.trim()
     };
 
     profiles.push(newUser);
@@ -1358,6 +1575,64 @@ function addEmployee() {
     document.getElementById("department").value = "";
     document.getElementById("position").value = "";
     document.getElementById("status").value = "Active";
+}
+
+function openEditEmployeeModal(profileIndex) {
+    if (profileIndex < 0 || profileIndex >= profiles.length) return;
+    editingEmployeeIndex = profileIndex;
+    const employee = profiles[profileIndex];
+    const { firstName, lastName } = splitName(employee.name);
+    const { position, department } = splitRole(employee.role);
+
+    document.getElementById("edit-first-name").value = firstName;
+    document.getElementById("edit-last-name").value = lastName;
+    document.getElementById("edit-email").value = employee.email || "";
+    document.getElementById("edit-phone").value = employee.phone || "";
+    document.getElementById("edit-position").value = position;
+    document.getElementById("edit-department").value = department || "Engineering";
+    document.getElementById("edit-status").value = employee.status || "Active";
+
+    document.getElementById("edit-employee-modal").style.display = "flex";
+}
+
+function closeEditEmployeeModal() {
+    document.getElementById("edit-employee-modal").style.display = "none";
+    editingEmployeeIndex = null;
+}
+
+function saveEditedEmployee() {
+    if (editingEmployeeIndex === null) return;
+
+    const firstName = document.getElementById("edit-first-name").value.trim();
+    const lastName = document.getElementById("edit-last-name").value.trim();
+    const email = document.getElementById("edit-email").value.trim();
+    const phone = document.getElementById("edit-phone").value.trim();
+    const position = document.getElementById("edit-position").value.trim();
+    const department = document.getElementById("edit-department").value.trim();
+    const status = document.getElementById("edit-status").value.trim();
+
+    if (!firstName || !lastName || !email || !position || !department || !status) {
+        alert("Please complete all required fields.");
+        return;
+    }
+
+    profiles[editingEmployeeIndex] = {
+        ...profiles[editingEmployeeIndex],
+        name: `${firstName} ${lastName}`,
+        role: `${position} - ${department}`,
+        status,
+        email,
+        phone
+    };
+
+    const searchValue = document.getElementById("profile-search-box").value.toLowerCase();
+    const filtered = profiles.filter(u =>
+        u.name.toLowerCase().includes(searchValue) ||
+        u.role.toLowerCase().includes(searchValue) ||
+        u.status.toLowerCase().includes(searchValue)
+    );
+    renderProfiles(filtered);
+    closeEditEmployeeModal();
 }
 
 // Complaint search functionality

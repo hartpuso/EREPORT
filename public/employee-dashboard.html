@@ -20,7 +20,7 @@
 
     /* NAVBAR */
     .navbar {
-      background-color: #1a1a2e;
+      background: linear-gradient(90deg, #C52E7F 0%, #00032D 32.7%, #00032D 100%);
       padding: 1rem 2rem;
       display: flex;
       justify-content: space-between;
@@ -71,6 +71,135 @@
       border-color: #5a5a6e;
     }
 
+    /* NOTIFICATION BUTTON */
+    .navbar-actions {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .notification-btn {
+      position: relative;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background-color: #2a2a3e;
+      border: 2px solid #404050;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s ease;
+      color: #888;
+      font-size: 1.2rem;
+    }
+
+    .notification-btn:hover {
+      background-color: #3a3a4e;
+      border-color: #5a5a6e;
+    }
+
+    .notification-badge {
+      position: absolute;
+      top: -5px;
+      right: -5px;
+      background-color: #ff4757;
+      color: white;
+      border-radius: 50%;
+      width: 18px;
+      height: 18px;
+      font-size: 0.7rem;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 2px solid #1a1a2e;
+    }
+
+    /* PROFILE DROPDOWN */
+    .profile-dropdown {
+      position: relative;
+    }
+
+    .profile-btn {
+      position: relative;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background-color: #2a2a3e;
+      border: 2px solid #404050;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s ease;
+      color: #888;
+      font-size: 1.2rem;
+    }
+
+    .profile-btn:hover {
+      background-color: #3a3a4e;
+      border-color: #5a5a6e;
+    }
+
+    .dropdown-menu {
+      position: absolute;
+      top: 100%;
+      right: 0;
+      background-color: white;
+      border-radius: 8px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+      min-width: 200px;
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(-10px);
+      transition: all 0.3s ease;
+      z-index: 1000;
+      border: 1px solid #e1e5e9;
+      margin-top: 8px;
+    }
+
+    .dropdown-menu.show {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+
+    .dropdown-item {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.75rem 1rem;
+      cursor: pointer;
+      transition: background-color 0.2s ease;
+      color: #333;
+      font-size: 0.9rem;
+    }
+
+    .dropdown-item:hover {
+      background-color: #f8f9fa;
+    }
+
+    .dropdown-item.logout {
+      color: #dc3545;
+    }
+
+    .dropdown-item.logout:hover {
+      background-color: #fff5f5;
+    }
+
+    .dropdown-divider {
+      height: 1px;
+      background-color: #e1e5e9;
+      margin: 0.25rem 0;
+    }
+
+    .dropdown-icon {
+      font-size: 1rem;
+      width: 20px;
+      text-align: center;
+    }
+
     /* CONTAINER */
     .container {
       max-width: 100%;
@@ -88,7 +217,6 @@
 
     .nav-btn {
       background: linear-gradient(135deg, #1a1a2e 0%, #2a2a3e 100%);
-      border: 2px solid #c0175d;
       border-radius: 12px;
       padding: 2rem 1.5rem;
       text-align: center;
@@ -252,6 +380,541 @@
       margin-bottom: 1.5rem;
       display: none;
     }
+
+    .view-container {
+      display: none;
+    }
+
+    .view-container.active {
+      display: block;
+    }
+
+    .back-btn {
+      display: inline-block;
+      background-color: #c0175d;
+      color: white;
+      border: none;
+      padding: 0.5rem 1.5rem;
+      border-radius: 8px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      cursor: pointer;
+      margin-bottom: 2rem;
+      transition: all 0.3s ease;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    .back-btn:hover {
+      background-color: #a01250;
+      transform: translateY(-2px);
+    }
+
+    /* TRACKING CARD */
+    :root {
+      --green: #22c55e;
+      --green-light: #bbf7d0;
+      --green-glow: rgba(34, 197, 94, 0.25);
+      --purple: #6d28d9;
+      --purple-light: #ede9fe;
+      --magenta: #c026d3;
+      --magenta-btn: #d946ef;
+      --line-inactive: #c4b5fd;
+      --bg: #ffffff;
+      --text: #1e1b4b;
+      --subtext: #6b7280;
+      --card-bg: #fafafa;
+      --border: #e5e7eb;
+    }
+
+    .tracking-card {
+      background: var(--bg);
+      border: 1.5px solid var(--border);
+      border-radius: 16px;
+      padding: 32px 32px 28px;
+      box-shadow: 0 4px 32px rgba(109,40,217,0.06), 0 1px 4px rgba(0,0,0,0.04);
+      animation: fadeUp 0.5s ease both;
+    }
+
+    /* STEPPER */
+    .stepper {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      position: relative;
+      margin-bottom: 40px;
+    }
+
+    .stepper::before {
+      content: '';
+      position: absolute;
+      top: 36px;
+      left: calc(36px + 10%);
+      right: calc(36px + 10%);
+      height: 3px;
+      background: linear-gradient(90deg, var(--green) 0%, var(--green) 50%, var(--line-inactive) 50%);
+      z-index: 0;
+    }
+
+    .step {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+      z-index: 1;
+      flex: 1;
+    }
+
+    .step-icon {
+      width: 72px;
+      height: 72px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      transition: transform 0.3s ease;
+    }
+
+    .step-icon:hover { transform: scale(1.06); }
+
+    .step.completed .step-icon {
+      background: #fff;
+      border: 3px solid var(--green);
+      box-shadow: 0 0 0 5px var(--green-glow), 0 2px 12px rgba(34,197,94,0.2);
+    }
+
+    .step.active .step-icon {
+      background: #fff;
+      border: 3px solid var(--green);
+      box-shadow: 0 0 0 5px var(--green-glow), 0 2px 12px rgba(34,197,94,0.2);
+    }
+
+    .step.pending .step-icon {
+      background: #fff;
+      border: 3px solid var(--purple);
+      box-shadow: 0 0 0 5px rgba(109,40,217,0.08);
+    }
+
+    .step-icon svg {
+      width: 32px;
+      height: 32px;
+    }
+
+    .step.completed .step-icon svg,
+    .step.active .step-icon svg { stroke: var(--green); }
+    .step.pending .step-icon svg  { stroke: var(--purple); }
+
+    .step.active .step-icon::after {
+      content: '';
+      position: absolute;
+      inset: -6px;
+      border-radius: 50%;
+      border: 2px solid var(--green);
+      opacity: 0;
+      animation: pulse 2s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%   { transform: scale(0.95); opacity: 0.6; }
+      70%  { transform: scale(1.12); opacity: 0; }
+      100% { transform: scale(0.95); opacity: 0; }
+    }
+
+    .step-label {
+      text-align: center;
+    }
+
+    .step-title {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text);
+      line-height: 1.3;
+      margin-bottom: 4px;
+    }
+
+    .step-time {
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      color: var(--subtext);
+    }
+
+    .divider {
+      height: 1px;
+      background: var(--border);
+      margin-bottom: 28px;
+    }
+
+    .message-box {
+      display: flex;
+      gap: 12px;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-left: 4px solid var(--magenta);
+      border-radius: 8px;
+      padding: 18px 20px;
+      margin-bottom: 28px;
+    }
+
+    .message-icon {
+      flex-shrink: 0;
+      margin-top: 2px;
+      color: var(--magenta);
+      font-size: 16px;
+      font-weight: 700;
+    }
+
+    .message-text {
+      font-size: 13.5px;
+      line-height: 1.7;
+      color: #374151;
+    }
+
+    .btn-follow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--magenta-btn);
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      padding: 11px 22px;
+      font-family: 'Poppins', sans-serif;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s ease, transform 0.15s ease, box-shadow 0.2s ease;
+      box-shadow: 0 2px 8px rgba(192, 38, 211, 0.3);
+    }
+
+    .btn-follow:hover {
+      background: #a21caf;
+      transform: translateY(-1px);
+      box-shadow: 0 4px 16px rgba(192, 38, 211, 0.35);
+    }
+
+    .btn-follow:active { transform: translateY(0); }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(16px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* HISTORY VIEW STYLES */
+    :root {
+      --bg: #f0ede8;
+      --surface: #e8e4de;
+      --surface-hover: #dedad3;
+      --border: #ccc8c0;
+      --text-primary: #1a1814;
+      --text-secondary: #6b6760;
+      --text-mono: #3d3b38;
+      --resolved: #1a7a4a;
+      --resolved-bg: #e6f4ed;
+      --rejected: #c0392b;
+      --rejected-bg: #fdecea;
+      --accent: #2c2a27;
+    }
+
+    .history-container {
+      width: 100vw;
+      max-width: 100vw;
+      margin: 0;
+      margin-left: calc(-50vw + 50%);
+      padding: 0 3rem;
+    }
+
+    .history-header {
+      margin-bottom: 28px;
+      padding-bottom: 20px;
+      border-bottom: 2px solid var(--accent);
+    }
+
+    .history-header h1 {
+      font-size: 11px;
+      font-family: 'IBM Plex Mono', monospace;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--text-secondary);
+      margin-bottom: 6px;
+    }
+
+    .history-header h2 {
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--text-primary);
+      letter-spacing: -0.02em;
+    }
+
+    .filter-row {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
+
+    .filter-btn {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      padding: 6px 14px;
+      border-radius: 2px;
+      border: 1px solid var(--border);
+      background: transparent;
+      color: var(--text-secondary);
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+
+    .filter-btn.active, .filter-btn:hover {
+      background: var(--accent);
+      color: #fff;
+      border-color: var(--accent);
+    }
+
+    .records-list {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .record-item {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      overflow: hidden;
+      transition: background 0.15s;
+      opacity: 0;
+      transform: translateY(8px);
+      animation: fadeUp 0.3s ease forwards;
+    }
+    .record-item:nth-child(1) { animation-delay: 0.04s; }
+    .record-item:nth-child(2) { animation-delay: 0.09s; }
+    .record-item:nth-child(3) { animation-delay: 0.14s; }
+    .record-item:nth-child(4) { animation-delay: 0.19s; }
+    .record-item:nth-child(5) { animation-delay: 0.24s; }
+
+    .record-item:hover .record-header {
+      background: var(--surface-hover);
+    }
+
+    .record-header {
+      display: grid;
+      grid-template-columns: 110px 130px 1fr 110px 40px;
+      align-items: center;
+      padding: 16px 18px;
+      cursor: pointer;
+      gap: 12px;
+      transition: background 0.15s;
+    }
+
+    .record-date {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 12px;
+      color: var(--text-secondary);
+      white-space: nowrap;
+    }
+
+    .record-id {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 12px;
+      color: var(--text-mono);
+      white-space: nowrap;
+    }
+
+    .record-title {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text-primary);
+      letter-spacing: -0.01em;
+    }
+
+    .status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      padding: 4px 10px;
+      border-radius: 2px;
+      white-space: nowrap;
+      justify-self: end;
+    }
+
+    .status-badge::before {
+      content: '';
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+    }
+
+    .status-badge.resolved {
+      color: var(--resolved);
+      background: var(--resolved-bg);
+    }
+    .status-badge.resolved::before { background: var(--resolved); }
+
+    .status-badge.rejected {
+      color: var(--rejected);
+      background: var(--rejected-bg);
+    }
+    .status-badge.rejected::before { background: var(--rejected); }
+
+    .chevron {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-secondary);
+      transition: transform 0.2s ease;
+      justify-self: center;
+    }
+
+    .record-item.open .chevron {
+      transform: rotate(180deg);
+    }
+
+    .record-body {
+      display: none;
+      padding: 0 18px 18px;
+      border-top: 1px solid var(--border);
+    }
+
+    .record-item.open .record-body {
+      display: block;
+    }
+
+    .record-body-inner {
+      padding-top: 16px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    .detail-field label {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-secondary);
+      display: block;
+      margin-bottom: 4px;
+    }
+
+    .detail-field p {
+      font-size: 13px;
+      color: var(--text-primary);
+      line-height: 1.5;
+    }
+
+    .detail-field.full { grid-column: 1 / -1; }
+
+    .count-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+    }
+
+    .count-label {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 11px;
+      color: var(--text-secondary);
+      letter-spacing: 0.06em;
+    }
+
+    @media (max-width: 580px) {
+      .record-header {
+        grid-template-columns: 1fr auto 36px;
+        grid-template-rows: auto auto;
+      }
+      .record-date { grid-row: 2; font-size: 11px; }
+      .record-id { grid-row: 2; display: none; }
+      .record-title { grid-column: 1 / 2; grid-row: 1; }
+      .status-badge { grid-row: 1; grid-column: 2; }
+      .chevron { grid-row: 1 / 3; grid-column: 3; }
+      .record-body-inner { grid-template-columns: 1fr; }
+    }
+
+    /* PAGINATION */
+    .pagination-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 16px;
+      margin-top: 24px;
+      padding: 16px 0;
+    }
+
+    .pagination-btn {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 16px;
+      background-color: #f8f9fa;
+      border: 1px solid #e1e5e9;
+      border-radius: 6px;
+      color: #333;
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    .pagination-btn:hover:not(:disabled) {
+      background-color: #e9ecef;
+      border-color: #c0175d;
+      color: #c0175d;
+    }
+
+    .pagination-btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    .pagination-icon {
+      font-size: 16px;
+      font-weight: bold;
+    }
+
+    .pagination-numbers {
+      display: flex;
+      gap: 4px;
+    }
+
+    .page-number {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 36px;
+      height: 36px;
+      border: 1px solid #e1e5e9;
+      border-radius: 6px;
+      background-color: #f8f9fa;
+      color: #333;
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    .page-number:hover {
+      background-color: #e9ecef;
+      border-color: #c0175d;
+    }
+
+    .page-number.active {
+      background-color: #c0175d;
+      border-color: #c0175d;
+      color: white;
+    }
+
+    .page-number.disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
   </style>
 </head>
 <body>
@@ -259,10 +922,43 @@
   <!-- NAVBAR -->
   <nav class="navbar">
     <div class="logo">
-      <div class="logo-icon">e</div>
-      <span>eReport</span>
+      <img src="/logo3.png" alt="eReport" style="width:160px; height:60px; object-fit:cover;" />
+      
     </div>
-    <button class="profile-btn" title="Profile">👤</button>
+    <div class="navbar-actions">
+      <button class="notification-btn" title="Notifications">
+        <span class="notification-icon">🔔</span>
+        <span class="notification-badge" id="notificationBadge">3</span>
+      </button>
+      <div class="profile-dropdown">
+        <button class="profile-btn" title="Profile" id="profileBtn">
+          <span class="profile-icon">👤</span>
+        </button>
+        <div class="dropdown-menu" id="profileDropdown">
+          <div class="dropdown-item">
+            <span class="dropdown-icon">👤</span>
+            <span>My Profile</span>
+          </div>
+          <div class="dropdown-item">
+            <span class="dropdown-icon">⚙️</span>
+            <span>Settings</span>
+          </div>
+          <div class="dropdown-item">
+            <span class="dropdown-icon">📊</span>
+            <span>Reports</span>
+          </div>
+          <div class="dropdown-item">
+            <span class="dropdown-icon">📞</span>
+            <span>Support</span>
+          </div>
+          <div class="dropdown-divider"></div>
+          <div class="dropdown-item logout">
+            <span class="dropdown-icon">🚪</span>
+            <span>Logout</span>
+          </div>
+        </div>
+      </div>
+    </div>
   </nav>
 
   <!-- MAIN CONTAINER -->
@@ -270,14 +966,14 @@
     
     <!-- NAV BUTTONS -->
     <div class="nav-buttons-container">
-      <button type="button" class="nav-btn" onclick="document.getElementById('reportForm').scrollIntoView({behavior: 'smooth'});">
-        📝 Submit a Report
+      <button type="button" class="nav-btn" id="btn-form" onclick="toggleView('form');">
+         Submit a Report
       </button>
-      <button type="button" class="nav-btn" onclick="alert('Track Your Reports - Feature coming soon');">
-        📊 Track Your Reports
+      <button type="button" class="nav-btn" id="btn-tracking" onclick="toggleView('tracking');">
+         Track Your Reports
       </button>
-      <button type="button" class="nav-btn" onclick="alert('History of Reports - Feature coming soon');">
-        📜 History of Reports
+      <button type="button" class="nav-btn" id="btn-history" onclick="toggleView('history');">
+         History of Reports
       </button>
     </div>
 
@@ -286,6 +982,8 @@
       ✓ Your report has been submitted successfully. We'll review it shortly.
     </div>
 
+    <!-- REPORT FORM VIEW -->
+    <div class="view-container active" id="formView">
     <!-- FORM SECTION -->
     <form class="form-section" id="reportForm">
       
@@ -295,9 +993,9 @@
         <select class="form-select" id="complaintType" required>
           <option value="" disabled selected>Select a type...</option>
           <option value="harassment">Harassment</option>
-          <option value="safety">Workplace Safety</option>
-          <option value="salary">Salary Issue</option>
-          <option value="misconduct">Misconduct</option>
+          <option value="safety">General Dispute</option>
+          <option value="salary">Safety Violation</option>
+          <option value="misconduct">Tech Problems</option>
           <option value="other">Other</option>
         </select>
       </div>
@@ -319,54 +1017,454 @@
       </div>
 
       <!-- SUBMIT BUTTON -->
-      <button type="submit" class="submit-btn">Submit a Report</button>
+      <button type="submit" class="submit-btn">Submit a Report Ticket</button>
 
     </form>
+    </div>
 
-  </div>
+    <!-- TRACKING VIEW -->
+    <div class="view-container" id="trackingView">
+    
+      
+      <div class="tracking-card">
+        <!-- STEPPER -->
+        <div class="stepper">
+          <div class="step completed">
+            <div class="step-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+                <circle cx="9" cy="7" r="4"/>
+                <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+                <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+                <path d="M19 8l2-2-2-2"/>
+              </svg>
+            </div>
+            <div class="step-label">
+              <div class="step-title">Complaint Request<br>On Queue</div>
+              <div class="step-time">03/24/2026 &nbsp; 14:30</div>
+            </div>
+          </div>
+
+          <div class="step active">
+            <div class="step-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M5 22h14"/>
+                <path d="M5 2h14"/>
+                <path d="M17 2v4l-5 5-5-5V2"/>
+                <path d="M7 22v-4l5-5 5 5v4"/>
+              </svg>
+            </div>
+            <div class="step-label">
+              <div class="step-title">Complaint Request<br>On Progress</div>
+              <div class="step-time">03/24/2026 &nbsp; 15:45</div>
+            </div>
+          </div>
+
+          <div class="step pending">
+            <div class="step-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
+                <circle cx="9" cy="7" r="4"/>
+                <polyline points="16 11 18 13 22 9"/>
+              </svg>
+            </div>
+            <div class="step-label">
+              <div class="step-title">Complaint Successfully<br>Approved</div>
+              <div class="step-time">Pending</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="divider"></div>
+
+        <!-- MESSAGE -->
+        <div class="message-box">
+          <div class="message-icon">▶</div>
+          <p class="message-text">
+            We acknowledge your complaint and want to assure you that it is being given careful attention.
+            The status is currently <strong>In Progress</strong>, and our team is actively working toward resolution.
+            We appreciate your patience and understanding as we continue to address this matter, and we will
+            provide further updates once available.
+          </p>
+        </div>
+
+        <!-- BUTTON -->
+        <button class="btn-follow" onclick="alert('Follow-up request submitted!')">
+          Submit Follow up Request
+        </button>
+      </div>
+    </div>
+    <!-- ── HISTORY VIEW ── -->
+    <div class="view-container" id="historyView">
+      <div class="history-container">
+
+       
+        <div class="filter-row">
+          <button class="filter-btn active" id="filter-all"      onclick="filterRecords('all', this)">All</button>
+          <button class="filter-btn"         id="filter-resolved" onclick="filterRecords('resolved', this)">Resolved</button>
+          <button class="filter-btn"         id="filter-rejected" onclick="filterRecords('rejected', this)">Rejected</button>
+        </div>
+
+        <div class="count-row">
+          <span class="count-label" id="count-label">5 records</span>
+        </div>
+
+        <div class="records-list" id="records-list"></div>
+
+        <!-- PAGINATION -->
+        <div class="pagination-container" id="paginationContainer" style="display: none;">
+          <button class="pagination-btn" id="prevBtn" onclick="changePage(currentPage - 1)">
+            <span class="pagination-icon">‹</span>
+            Previous
+          </button>
+          
+          <div class="pagination-numbers" id="paginationNumbers"></div>
+          
+          <button class="pagination-btn" id="nextBtn" onclick="changePage(currentPage + 1)">
+            Next
+            <span class="pagination-icon">›</span>
+          </button>
+        </div>
+
+      </div>
+    </div>  </div>
+
 
   <script>
-    // FILE UPLOAD
+    // ── FILE UPLOAD ──
     document.getElementById('uploadInput').addEventListener('change', function(e) {
-      const fileName = e.target.files[0]?.name || '';
-      document.getElementById('fileName').textContent = fileName ? `✓ ${fileName}` : '';
+      const name = e.target.files[0]?.name || '';
+      document.getElementById('fileName').textContent = name ? `✓ ${name}` : '';
     });
 
-    // FORM SUBMISSION
+    // ── FORM SUBMISSION ──
     document.getElementById('reportForm').addEventListener('submit', function(e) {
       e.preventDefault();
-      
-      const complaintType = document.getElementById('complaintType').value;
-      const complaintText = document.getElementById('complaintText').value;
-      
-      // Log form data (in real app, send to backend)
-      console.log({
-        type: complaintType,
-        complaint: complaintText,
-        timestamp: new Date().toISOString()
-      });
-
-      // Show success message
       const successMsg = document.getElementById('successMessage');
       successMsg.style.display = 'block';
-      
-      // Reset form
       this.reset();
       document.getElementById('fileName').textContent = '';
-
-      // Hide success message after 5 seconds
-      setTimeout(() => {
-        successMsg.style.display = 'none';
-      }, 5000);
-
-      // Scroll to top
+      setTimeout(() => { successMsg.style.display = 'none'; }, 5000);
       window.scrollTo({ top: 0, behavior: 'smooth' });
     });
 
-    // PROFILE BUTTON
-    document.querySelector('.profile-btn').addEventListener('click', function() {
-      alert('Profile menu would open here (logout, settings, etc.)');
+    // ── NOTIFICATION BUTTON ──
+    document.querySelector('.notification-btn').addEventListener('click', function() {
+      alert('You have 3 new notifications:\n• Report #CR-2026-0320 has been resolved\n• New system update available\n• Your report feedback requested');
+      // Hide badge after viewing
+      document.getElementById('notificationBadge').style.display = 'none';
     });
+
+    // ── PROFILE DROPDOWN ──
+    const profileBtn = document.getElementById('profileBtn');
+    const profileDropdown = document.getElementById('profileDropdown');
+
+    profileBtn.addEventListener('click', function(e) {
+      e.stopPropagation();
+      profileDropdown.classList.toggle('show');
+    });
+
+    // Close dropdown when clicking outside
+    document.addEventListener('click', function(e) {
+      if (!profileBtn.contains(e.target) && !profileDropdown.contains(e.target)) {
+        profileDropdown.classList.remove('show');
+      }
+    });
+
+    // Dropdown menu items functionality
+    document.querySelectorAll('.dropdown-item').forEach(item => {
+      item.addEventListener('click', function() {
+        const action = this.textContent.trim().toLowerCase();
+        
+        switch(action) {
+          case 'my profile':
+            alert('Profile page would open here');
+            break;
+          case 'settings':
+            alert('Settings page would open here');
+            break;
+          case 'reports':
+            alert('Reports dashboard would open here');
+            break;
+          case 'support':
+            alert('Support contact form would open here');
+            break;
+          case 'logout':
+            if (confirm('Are you sure you want to logout?')) {
+              alert('Logged out successfully');
+              // In a real app, this would redirect to login page
+            }
+            break;
+        }
+        
+        profileDropdown.classList.remove('show');
+      });
+    });
+
+    // ── VIEW TOGGLE ──
+    function toggleView(view) {
+      ['form', 'tracking', 'history'].forEach(v => {
+        document.getElementById(v + 'View').classList.toggle('active', v === view);
+        document.getElementById('btn-' + v).classList.toggle('active-tab', v === view);
+      });
+      if (view === 'history') {
+        currentPage = 1; // Reset to first page when switching to history
+        renderRecords('all', currentPage);
+      }
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // ── HISTORY DATA ──
+    const records = [
+      {
+        date: '23/03/2026', id: 'CR-2026-0320',
+        title: 'Workplace Harassment Concern', status: 'resolved',
+        department: 'Human Resources', filedBy: 'Employee #4821',
+        resolution: 'Mediation conducted. Written warning issued to the respondent. Case closed.',
+        notes: 'Follow-up scheduled in 30 days to ensure no recurrence.'
+      },
+      {
+        date: '18/03/2026', id: 'CR-2026-0318',
+        title: 'Verbal Harassment Incident', status: 'rejected',
+        department: 'Operations', filedBy: 'Employee #3305',
+        resolution: 'Insufficient evidence to support the claim. Complaint dismissed.',
+        notes: 'Claimant may resubmit with additional documentation.'
+      },
+      {
+        date: '12/03/2026', id: 'CR-2026-0312',
+        title: 'Salary Release Delay', status: 'resolved',
+        department: 'Finance', filedBy: 'Employee #2274',
+        resolution: 'Payroll error identified and corrected. Back pay released on 14/03/2026.',
+        notes: 'Payroll team notified to prevent recurrence.'
+      },
+      {
+        date: '05/03/2026', id: 'CR-2026-0305',
+        title: 'Overtime Pay Discrepancy', status: 'rejected',
+        department: 'Operations', filedBy: 'Employee #1988',
+        resolution: 'Overtime hours disputed by timesheet records. Complaint not substantiated.',
+        notes: 'Employee advised to review DTR policy.'
+      },
+      {
+        date: '22/02/2026', id: 'CR-2026-0222',
+        title: 'Office Equipment Malfunction', status: 'resolved',
+        department: 'IT / Admin', filedBy: 'Employee #5510',
+        resolution: 'Faulty equipment replaced. Work continuity restored within 24 hours.',
+        notes: 'Equipment logged for end-of-life replacement cycle.'
+      },
+      {
+        date: '15/02/2026', id: 'CR-2026-0215',
+        title: 'Discrimination Complaint', status: 'resolved',
+        department: 'Human Resources', filedBy: 'Employee #3344',
+        resolution: 'Investigation completed. Training provided to involved parties.',
+        notes: 'Diversity awareness session scheduled for department.'
+      },
+      {
+        date: '08/02/2026', id: 'CR-2026-0208',
+        title: 'Safety Hazard Report', status: 'resolved',
+        department: 'Facilities', filedBy: 'Employee #6677',
+        resolution: 'Hazard identified and corrected. Safety inspection completed.',
+        notes: 'Monthly safety audits implemented.'
+      },
+      {
+        date: '01/02/2026', id: 'CR-2026-0201',
+        title: 'Performance Review Dispute', status: 'rejected',
+        department: 'Human Resources', filedBy: 'Employee #8899',
+        resolution: 'Review process followed standard procedures. No irregularities found.',
+        notes: 'Employee advised of appeal process.'
+      },
+      {
+        date: '25/01/2026', id: 'CR-2026-0125',
+        title: 'Workplace Bullying', status: 'resolved',
+        department: 'Human Resources', filedBy: 'Employee #1122',
+        resolution: 'Mediation successful. Behavior agreement signed.',
+        notes: 'Follow-up monitoring scheduled for 3 months.'
+      },
+      {
+        date: '18/01/2026', id: 'CR-2026-0118',
+        title: 'IT Support Delay', status: 'resolved',
+        department: 'IT / Admin', filedBy: 'Employee #4455',
+        resolution: 'Technical issue resolved. System access restored.',
+        notes: 'IT response time SLA reviewed and improved.'
+      },
+      {
+        date: '12/01/2026', id: 'CR-2026-0112',
+        title: 'Unauthorized Overtime', status: 'rejected',
+        department: 'Operations', filedBy: 'Employee #7788',
+        resolution: 'Timesheet records verified. No unauthorized overtime found.',
+        notes: 'Employee trained on time reporting procedures.'
+      },
+      {
+        date: '05/01/2026', id: 'CR-2026-0105',
+        title: 'Office Maintenance Issue', status: 'resolved',
+        department: 'Facilities', filedBy: 'Employee #2233',
+        resolution: 'Maintenance request fulfilled. Equipment repaired.',
+        notes: 'Preventive maintenance schedule updated.'
+      },
+      {
+        date: '28/12/2025', id: 'CR-2025-1228',
+        title: 'Holiday Pay Calculation Error', status: 'resolved',
+        department: 'Finance', filedBy: 'Employee #5566',
+        resolution: 'Payroll calculation corrected. Back pay issued.',
+        notes: 'Payroll system validation enhanced.'
+      },
+      {
+        date: '20/12/2025', id: 'CR-2025-1220',
+        title: 'Confidentiality Breach', status: 'resolved',
+        department: 'Human Resources', filedBy: 'Employee #9900',
+        resolution: 'Investigation completed. Security protocols reinforced.',
+        notes: 'Mandatory confidentiality training implemented.'
+      },
+      {
+        date: '15/12/2025', id: 'CR-2025-1215',
+        title: 'Equipment Theft', status: 'rejected',
+        department: 'Security', filedBy: 'Employee #3344',
+        resolution: 'Insufficient evidence to proceed with investigation.',
+        notes: 'Security camera footage reviewed. No suspicious activity found.'
+      },
+      {
+        date: '08/12/2025', id: 'CR-2025-1208',
+        title: 'Workplace Accident', status: 'resolved',
+        department: 'Safety', filedBy: 'Employee #6677',
+        resolution: 'Medical attention provided. Incident report filed.',
+        notes: 'Safety training session scheduled for affected department.'
+      }
+    ];
+
+    let currentFilter = 'all';
+    let currentPage = 1;
+    const itemsPerPage = 8;
+
+    function filterRecords(filter, btn) {
+      currentFilter = filter;
+      currentPage = 1; // Reset to first page when filtering
+      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      renderRecords(filter, currentPage);
+    }
+
+    function renderRecords(filter, page = 1) {
+      const list = document.getElementById('records-list');
+      const countLabel = document.getElementById('count-label');
+      const filtered = filter === 'all' ? records : records.filter(r => r.status === filter);
+      
+      // Calculate pagination
+      const totalItems = filtered.length;
+      const totalPages = Math.ceil(totalItems / itemsPerPage);
+      const startIndex = (page - 1) * itemsPerPage;
+      const endIndex = startIndex + itemsPerPage;
+      const pageItems = filtered.slice(startIndex, endIndex);
+      
+      // Update count label with page info
+      const showingStart = startIndex + 1;
+      const showingEnd = Math.min(endIndex, totalItems);
+      countLabel.textContent = `Showing ${showingStart}-${showingEnd} of ${totalItems} record${totalItems !== 1 ? 's' : ''}`;
+      
+      // Render records
+      list.innerHTML = pageItems.map((r, i) => {
+        const globalIndex = startIndex + i;
+        return `
+        <div class="record-item" id="item-${globalIndex}">
+          <div class="record-header" onclick="toggleItem(${globalIndex})">
+            <span class="record-date">${r.date}</span>
+            <span class="record-id">${r.id}</span>
+            <span class="record-title">${r.title}</span>
+            <span class="status-badge ${r.status}">${r.status.charAt(0).toUpperCase() + r.status.slice(1)}</span>
+            <span class="chevron">
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+                <path d="M3 5L7 9L11 5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </span>
+          </div>
+          <div class="record-body">
+            <div class="record-body-inner">
+              <div class="detail-field">
+                <label>Case ID</label><p>${r.id}</p>
+              </div>
+              <div class="detail-field">
+                <label>Department</label><p>${r.department}</p>
+              </div>
+              <div class="detail-field">
+                <label>Filed By</label><p>${r.filedBy}</p>
+              </div>
+              <div class="detail-field">
+                <label>Status</label><p>${r.status.charAt(0).toUpperCase() + r.status.slice(1)}</p>
+              </div>
+              <div class="detail-field full">
+                <label>Resolution</label><p>${r.resolution}</p>
+              </div>
+              <div class="detail-field full">
+                <label>Notes</label><p>${r.notes}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      `}).join('');
+      
+      // Render pagination
+      renderPagination(totalPages, page);
+    }
+
+    function renderPagination(totalPages, currentPage) {
+      const container = document.getElementById('paginationContainer');
+      const numbersDiv = document.getElementById('paginationNumbers');
+      const prevBtn = document.getElementById('prevBtn');
+      const nextBtn = document.getElementById('nextBtn');
+      
+      if (totalPages <= 1) {
+        container.style.display = 'none';
+        return;
+      }
+      
+      container.style.display = 'flex';
+      
+      // Update prev/next buttons
+      prevBtn.disabled = currentPage === 1;
+      nextBtn.disabled = currentPage === totalPages;
+      
+      // Generate page numbers
+      let pageNumbers = [];
+      const maxVisible = 5;
+      
+      if (totalPages <= maxVisible) {
+        // Show all pages
+        for (let i = 1; i <= totalPages; i++) {
+          pageNumbers.push(i);
+        }
+      } else {
+        // Show pages with ellipsis
+        if (currentPage <= 3) {
+          pageNumbers = [1, 2, 3, 4, '...', totalPages];
+        } else if (currentPage >= totalPages - 2) {
+          pageNumbers = [1, '...', totalPages - 3, totalPages - 2, totalPages - 1, totalPages];
+        } else {
+          pageNumbers = [1, '...', currentPage - 1, currentPage, currentPage + 1, '...', totalPages];
+        }
+      }
+      
+      numbersDiv.innerHTML = pageNumbers.map(num => {
+        if (num === '...') {
+          return '<span class="page-number disabled">...</span>';
+        }
+        return `<button class="page-number ${num === currentPage ? 'active' : ''}" onclick="changePage(${num})">${num}</button>`;
+      }).join('');
+    }
+
+    function changePage(page) {
+      const filtered = currentFilter === 'all' ? records : records.filter(r => r.status === currentFilter);
+      const totalPages = Math.ceil(filtered.length / itemsPerPage);
+      
+      if (page < 1 || page > totalPages) return;
+      
+      currentPage = page;
+      renderRecords(currentFilter, currentPage);
+      
+      // Scroll to top of records
+      document.getElementById('records-list').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    function toggleItem(i) {
+      document.getElementById(`item-${i}`).classList.toggle('open');
+    }
   </script>
 
 </body>

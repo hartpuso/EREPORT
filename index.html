@@ -71,7 +71,7 @@
 <body class="bg-white text-slate-800 antialiased">
 
   <!-- ========== MODERN NAVIGATION (white-dominant, minimal) ========== -->
-  <nav class="sticky top-0 z-50 w-full glass-nav border-b border-slate-100" style="background-color: #1a1a2e;">
+  <nav class="sticky top-0 z-50 w-full glass-nav border-b border-slate-100" style="background: linear-gradient(90deg, #C52E7F 0%, #00032D 32.69%, #00032D 100%);">
     <div class="max-w-6xl mx-auto px-6 sm:px-8 py-4 flex items-center justify-between">
       <!-- Logo + Brand (clean) -->
       <div class="flex items-center gap-3">
@@ -155,21 +155,29 @@
     </div>
 
     <!-- ========== ABOUT SECTION ========== -->
-    <div id="about" class="max-w-6xl mx-auto px-6 sm:px-8 py-16 md:py-20">
-      <div class="text-center mb-12">
+    <style>
+      .about-wrapper { max-width: 100%; width: 100%; margin: 0 auto; background: #f8fafc; padding: 60px 24px 80px; }
+      .about-content { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: 1fr; gap: 2.5rem; }
+      .about-hero { text-align: center; max-width: 900px; margin: 0 auto 2rem; }
+      .about-hero p { margin: 0 auto; max-width: 820px; }
+      .about-columns { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; }
+      .about-card { background: white; padding: 1.5rem; border-radius: 1rem; border: 1px solid #e2e8f0; box-shadow: 0 12px 28px rgba(15, 23, 42, 0.08); }
+    </style>
+
+    <div id="about" class="about-wrapper">
+      <div class="about-hero mb-12">
         <h2 class="text-3xl md:text-4xl font-bold text-slate-900 mb-4">About eReport</h2>
-        <p class="text-lg text-slate-600 max-w-2xl mx-auto">Learn more about our mission to create a safer, more transparent workplace reporting environment.</p>
+        <p class="text-lg text-slate-600">Learn more about our mission to create a safer, more transparent workplace reporting environment.</p>
       </div>
 
-      <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-        <!-- About Content -->
-        <div class="space-y-6">
-          <div>
+      <div class="about-content">
+        <div class="about-columns">
+          <div class="about-card">
             <h3 class="text-2xl font-bold text-slate-800 mb-3">Our Mission</h3>
             <p class="text-slate-600 leading-relaxed">eReport is dedicated to fostering safe and transparent workplace environments by providing a secure, confidential platform for employee reporting. We believe that every voice matters and that organizations thrive when employees feel heard and protected.</p>
           </div>
 
-          <div>
+          <div class="about-card">
             <h3 class="text-2xl font-bold text-slate-800 mb-3">Why Choose Us</h3>
             <ul class="space-y-2 text-slate-600">
               <li class="flex items-start gap-3">
@@ -191,31 +199,12 @@
             </ul>
           </div>
 
-          <div>
+          <div class="about-card">
             <h3 class="text-2xl font-bold text-slate-800 mb-3">Our Commitment</h3>
             <p class="text-slate-600 leading-relaxed">We are committed to maintaining the highest standards of security, privacy, and user experience. Our platform is continuously updated to meet evolving compliance requirements and to incorporate the latest security measures.</p>
           </div>
         </div>
 
-        <!-- About Visual/Image Placeholder -->
-        <div class="bg-gradient-to-br from-slate-50 to-slate-100 rounded-2xl p-8 border border-slate-200">
-          <div class="text-center">
-            <div class="w-20 h-20 rounded-full bg-slate-200 flex items-center justify-center mx-auto mb-6">
-              <span class="text-3xl">🏢</span>
-            </div>
-            <div class="flex justify-center gap-4 text-sm text-slate-500">
-             
-              <div class="text-center">
-                <div class="font-bold text-2xl text-slate-800">10K+</div>
-                <div>Reports Filed</div>
-              </div>
-              <div class="text-center">
-                <div class="font-bold text-2xl text-slate-800">99.9%</div>
-                <div>Uptime</div>
-              </div>
-            </div>
-          </div>
-        </div>
       </div>
     </div>
 
