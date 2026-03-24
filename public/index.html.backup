@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>eReport | Modern Reporting Platform</title>
+  <!-- Tailwind CSS + Google Fonts for modern typography -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Custom Tailwind config override for smoother whites and modern feel -->
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap');
+    
+    * {
+      font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    }
+    
+    /* Smooth scrolling & modern focus states */
+    html {
+      scroll-behavior: smooth;
+    }
+    
+    body {
+      background-color: #ffffff;
+    }
+    
+    /* Custom subtle shadow for cards and nav (light & airy) */
+    .modern-card {
+      box-shadow: 0 20px 35px -12px rgba(0, 0, 0, 0.05), 0 1px 2px rgba(0, 0, 0, 0.02);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    
+    .modern-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 25px 40px -12px rgba(0, 0, 0, 0.08);
+    }
+    
+    .glass-nav {
+      background: rgba(255, 255, 255, 0.96);
+      backdrop-filter: blur(0px);
+      border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    }
+    
+    /* Gradient hero accent (very light touch) */
+    .hero-gradient-bg {
+      background: linear-gradient(135deg, #FFFFFF 0%, #F8FAFF 100%);
+      border: 1px solid rgba(0, 0, 0, 0.03);
+    }
+    
+    .feature-icon {
+      background: #F0F4FF;
+    }
+  </style>
+</head>
+<body class="bg-white text-slate-800 antialiased">
+
+  <!-- ========== MODERN NAVIGATION (white-dominant, minimal) ========== -->
+  <nav class="sticky top-0 z-50 w-full glass-nav bg-white/95 border-b border-slate-100">
+    <div class="max-w-6xl mx-auto px-6 sm:px-8 py-4 flex items-center justify-between">
+      <!-- Logo + Brand (clean) -->
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-xl bg-slate-900 flex items-center justify-center shadow-sm">
+          <span class="text-white font-bold text-xl tracking-tight">eR</span>
+        </div>
+        <span class="text-2xl font-bold tracking-tight bg-gradient-to-r from-slate-800 to-slate-600 bg-clip-text text-transparent">eReport</span>
+      </div>
+      
+      <!-- Navigation links + About (only about nav) -->
+      <div class="flex items-center gap-6 sm:gap-8">
+        <a href="index.html" class="text-slate-700 hover:text-slate-900 font-medium text-sm sm:text-base transition-colors duration-200 relative after:absolute after:bottom-0 after:left-0 after:h-[2px] after:w-0 after:bg-slate-800 after:transition-all hover:after:w-full">Home</a>
+        <a href="about.html" class="text-slate-700 hover:text-slate-900 font-medium text-sm sm:text-base transition-colors duration-200 relative after:absolute after:bottom-0 after:left-0 after:h-[2px] after:w-0 after:bg-slate-800 after:transition-all hover:after:w-full">About</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ========== HERO SECTION (white-dominant, modern, clean) ========== -->
+  <main>
+    <div class="max-w-6xl mx-auto px-6 sm:px-8 pt-12 md:pt-20 pb-8">
+      <div class="hero-gradient-bg rounded-3xl p-8 md:p-12 lg:p-16 modern-card bg-white border border-slate-100">
+        <div class="max-w-3xl mx-auto text-center">
+          <!-- subtle badge -->
+          <div class="inline-flex items-center gap-2 bg-slate-50 px-4 py-1.5 rounded-full border border-slate-200 mb-6">
+            <span class="relative flex h-2 w-2">
+              <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+              <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+            </span>
+            <span class="text-xs font-medium text-slate-600">Trusted by 500+ organizations</span>
+          </div>
+          
+          <h1 class="text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight text-slate-900 leading-[1.2]">
+            Smart Reporting <br class="hidden sm:block"> Made <span class="bg-gradient-to-r from-slate-800 to-slate-600 bg-clip-text text-transparent">Simple & Secure</span>
+          </h1>
+          
+          <p class="mt-6 text-lg md:text-xl text-slate-500 max-w-2xl mx-auto leading-relaxed">
+            A safe, approachable employee reporting dashboard for confidential incident and complaint submission. Elevate transparency with modern tools.
+          </p>
+          
+          <div class="mt-10 flex flex-col sm:flex-row gap-4 justify-center">
+            <button onclick="goToLogin()" class="inline-flex items-center justify-center gap-2 px-8 py-3.5 rounded-xl bg-slate-900 text-white font-semibold shadow-md hover:bg-slate-800 transition-all duration-200 hover:shadow-lg text-base">
+              Get Started
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                <path fill-rule="evenodd" d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z" clip-rule="evenodd" />
+              </svg>
+            </button>
+            <a href="about.html" class="inline-flex items-center justify-center gap-2 px-8 py-3.5 rounded-xl bg-white border border-slate-200 text-slate-700 font-semibold hover:bg-slate-50 transition-all duration-200 shadow-sm">
+              Learn More
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+              </svg>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ========== FEATURE SECTION (modern cards, white dominant) ========== -->
+    <div class="max-w-6xl mx-auto px-6 sm:px-8 py-12 md:py-16">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-7">
+        
+        <!-- Feature Card 1 -->
+        <div class="bg-white rounded-2xl p-6 modern-card border border-slate-100 transition-all">
+          <div class="w-12 h-12 rounded-xl bg-slate-100 flex items-center justify-center mb-5">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-slate-700" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M12 15v2m-6-4h12a2 2 0 002-2v-4a2 2 0 00-2-2H6a2 2 0 00-2 2v4a2 2 0 002 2zm10 4H8a2 2 0 00-2 2v4a2 2 0 002 2h8a2 2 0 002-2v-4a2 2 0 00-2-2z" />
+            </svg>
+          </div>
+          <h3 class="text-xl font-bold text-slate-800 mb-2">Confidential Submissions</h3>
+          <p class="text-slate-500 text-sm leading-relaxed">End-to-end encrypted reporting ensures employee identity protection and total discretion.</p>
+        </div>
+        
+        <!-- Feature Card 2 -->
+        <div class="bg-white rounded-2xl p-6 modern-card border border-slate-100 transition-all">
+          <div class="w-12 h-12 rounded-xl bg-slate-100 flex items-center justify-center mb-5">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-slate-700" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+          </div>
+          <h3 class="text-xl font-bold text-slate-800 mb-2">Track Progress</h3>
+          <p class="text-slate-500 text-sm leading-relaxed">Real-time status updates, case history and transparent resolution workflow.</p>
+        </div>
+        
+        <!-- Feature Card 3 -->
+        <div class="bg-white rounded-2xl p-6 modern-card border border-slate-100 transition-all">
+          <div class="w-12 h-12 rounded-xl bg-slate-100 flex items-center justify-center mb-5">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-slate-700" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M12 11c0 1.5-1.5 2.5-3 2.5s-3-1-3-2.5m12 0c0 1.5-1.5 2.5-3 2.5s-3-1-3-2.5m-3 7.5h6M4 8h16a2 2 0 012 2v8a2 2 0 01-2 2H4a2 2 0 01-2-2v-8a2 2 0 012-2z" />
+            </svg>
+          </div>
+          <h3 class="text-xl font-bold text-slate-800 mb-2">Built on Trust</h3>
+          <p class="text-slate-500 text-sm leading-relaxed">Safety-first design, fairness protocols, and compliance with modern reporting standards.</p>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <script>
+    // Login navigation function (preserving original behavior)
+    function goToLogin() {
+      window.location.href = "login.html";
+    }
+    
+    // Additional: smooth interactive hover polish (optional)
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        const targetId = this.getAttribute('href');
+        if (targetId !== "#" && targetId !== "#" && targetId.startsWith("#")) {
+          e.preventDefault();
+          document.querySelector(targetId)?.scrollIntoView({ behavior: 'smooth' });
+        }
+      });
+    });
+  </script>
+
+</body>
+</html>

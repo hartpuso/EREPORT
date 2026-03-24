@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>eReport - Employee Dashboard</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: white;
+      min-height: 100vh;
+    }
+
+    /* NAVBAR */
+    .navbar {
+      background-color: #1a1a2e;
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: white;
+    }
+
+    .logo-icon {
+      width: 32px;
+      height: 32px;
+      background: linear-gradient(135deg, #ff006e, #c0175d);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: 700;
+      font-size: 1.2rem;
+      box-shadow: 0 0 12px rgba(255, 0, 110, 0.4);
+    }
+
+    .profile-btn {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background-color: #2a2a3e;
+      border: 2px solid #404050;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s ease;
+      color: #888;
+      font-size: 1.2rem;
+    }
+
+    .profile-btn:hover {
+      background-color: #3a3a4e;
+      border-color: #5a5a6e;
+    }
+
+    /* CONTAINER */
+    .container {
+      max-width: 100%;
+      margin: 0 auto;
+      padding: 2rem 3rem;
+    }
+
+    /* NAV BUTTONS */
+    .nav-buttons-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 3rem;
+    }
+
+    .nav-btn {
+      background: linear-gradient(135deg, #1a1a2e 0%, #2a2a3e 100%);
+      border: 2px solid #c0175d;
+      border-radius: 12px;
+      padding: 2rem 1.5rem;
+      text-align: center;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      transition: all 0.3s ease;
+      cursor: pointer;
+      color: white;
+      font-family: 'Poppins', sans-serif;
+      font-size: 1.1rem;
+      font-weight: 600;
+    }
+
+    .nav-btn:hover {
+      transform: translateY(-4px);
+      background: linear-gradient(135deg, #c0175d 0%, #a01250 100%);
+      box-shadow: 0 6px 16px rgba(192, 23, 93, 0.4);
+    }
+
+    /* FORM SECTION */
+    .form-section {
+      background-color: transparent;
+    }
+
+    .form-group {
+      margin-bottom: 1.5rem;
+    }
+
+    .form-label {
+      display: block;
+      font-size: 0.875rem;
+      color: #444;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+    }
+
+    .form-select,
+    .form-textarea {
+      width: 100%;
+      padding: 0.75rem 1rem;
+      border: 1px solid #d0d0d8;
+      border-radius: 8px;
+      background-color: white;
+      font-family: 'Poppins', sans-serif;
+      font-size: 0.95rem;
+      transition: all 0.3s ease;
+      color: #333;
+    }
+
+    .form-select:focus,
+    .form-textarea:focus {
+      outline: none;
+      border-color: #c0175d;
+      box-shadow: 0 0 0 3px rgba(192, 23, 93, 0.1);
+    }
+
+    .form-select {
+      appearance: none;
+      background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23888' stroke-width='2'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+      background-repeat: no-repeat;
+      background-position: right 0.75rem center;
+      background-size: 1.2rem;
+      padding-right: 2.5rem;
+    }
+
+    .form-textarea {
+      min-height: 300px;
+      resize: vertical;
+      font-size: 0.95rem;
+      line-height: 1.5;
+    }
+
+    .form-textarea::placeholder {
+      color: #999;
+    }
+
+    /* UPLOAD BUTTON */
+    .upload-btn {
+      display: inline-block;
+      background-color: white;
+      border: 1.5px solid #333;
+      color: #333;
+      padding: 0.5rem 1.25rem;
+      border-radius: 20px;
+      font-size: 0.875rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-family: 'Poppins', sans-serif;
+      margin-bottom: 2rem;
+    }
+
+    .upload-btn:hover {
+      background-color: #f5f5f5;
+      border-color: #c0175d;
+      color: #c0175d;
+    }
+
+    #uploadInput {
+      display: none;
+    }
+
+    .file-name {
+      display: inline-block;
+      margin-left: 0.5rem;
+      color: #666;
+      font-size: 0.85rem;
+    }
+
+    /* SUBMIT BUTTON */
+    .submit-btn {
+      width: 100%;
+      padding: 1rem;
+      background-color: #c0175d;
+      color: white;
+      border: none;
+      border-radius: 12px;
+      font-size: 1.1rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-family: 'Poppins', sans-serif;
+      box-shadow: 0 4px 12px rgba(192, 23, 93, 0.3);
+    }
+
+    .submit-btn:hover {
+      background-color: #a01250;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px rgba(192, 23, 93, 0.4);
+    }
+
+    .submit-btn:active {
+      transform: translateY(0);
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 768px) {
+      .stats-container {
+        grid-template-columns: 1fr;
+      }
+
+      .navbar {
+        padding: 1rem;
+      }
+
+      .container {
+        padding: 1.5rem 1rem;
+      }
+
+      .stat-number {
+        font-size: 2rem;
+      }
+    }
+
+    /* SUCCESS MESSAGE */
+    .success-message {
+      background-color: rgba(192, 23, 93, 0.1);
+      border-left: 4px solid #c0175d;
+      color: #c0175d;
+      padding: 1rem;
+      border-radius: 8px;
+      margin-bottom: 1.5rem;
+      display: none;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <nav class="navbar">
+    <div class="logo">
+      <div class="logo-icon">e</div>
+      <span>eReport</span>
+    </div>
+    <button class="profile-btn" title="Profile">👤</button>
+  </nav>
+
+  <!-- MAIN CONTAINER -->
+  <div class="container">
+    
+    <!-- NAV BUTTONS -->
+    <div class="nav-buttons-container">
+      <button type="button" class="nav-btn" onclick="document.getElementById('reportForm').scrollIntoView({behavior: 'smooth'});">
+        📝 Submit a Report
+      </button>
+      <button type="button" class="nav-btn" onclick="alert('Track Your Reports - Feature coming soon');">
+        📊 Track Your Reports
+      </button>
+      <button type="button" class="nav-btn" onclick="alert('History of Reports - Feature coming soon');">
+        📜 History of Reports
+      </button>
+    </div>
+
+    <!-- SUCCESS MESSAGE -->
+    <div class="success-message" id="successMessage">
+      ✓ Your report has been submitted successfully. We'll review it shortly.
+    </div>
+
+    <!-- FORM SECTION -->
+    <form class="form-section" id="reportForm">
+      
+      <!-- COMPLAINT TYPE -->
+      <div class="form-group">
+        <label class="form-label">Select Type of Complaint</label>
+        <select class="form-select" id="complaintType" required>
+          <option value="" disabled selected>Select a type...</option>
+          <option value="harassment">Harassment</option>
+          <option value="safety">Workplace Safety</option>
+          <option value="salary">Salary Issue</option>
+          <option value="misconduct">Misconduct</option>
+          <option value="other">Other</option>
+        </select>
+      </div>
+
+      <!-- COMPLAINT DESCRIPTION -->
+      <div class="form-group">
+        <label class="form-label">Input Your Complaint</label>
+        <textarea class="form-textarea" id="complaintText" placeholder="Describe your complaint in detail..." required></textarea>
+      </div>
+
+      <!-- SUBMIT AN EVIDENCE -->
+      <div class="form-group">
+        <label class="form-label">Submit an Evidence</label>
+        <button type="button" class="upload-btn" onclick="document.getElementById('uploadInput').click()">
+          📎 Upload an Image or a File
+        </button>
+        <input type="file" id="uploadInput" accept="image/*,.pdf,.doc,.docx" />
+        <span class="file-name" id="fileName"></span>
+      </div>
+
+      <!-- SUBMIT BUTTON -->
+      <button type="submit" class="submit-btn">Submit a Report</button>
+
+    </form>
+
+  </div>
+
+  <script>
+    // FILE UPLOAD
+    document.getElementById('uploadInput').addEventListener('change', function(e) {
+      const fileName = e.target.files[0]?.name || '';
+      document.getElementById('fileName').textContent = fileName ? `✓ ${fileName}` : '';
+    });
+
+    // FORM SUBMISSION
+    document.getElementById('reportForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      const complaintType = document.getElementById('complaintType').value;
+      const complaintText = document.getElementById('complaintText').value;
+      
+      // Log form data (in real app, send to backend)
+      console.log({
+        type: complaintType,
+        complaint: complaintText,
+        timestamp: new Date().toISOString()
+      });
+
+      // Show success message
+      const successMsg = document.getElementById('successMessage');
+      successMsg.style.display = 'block';
+      
+      // Reset form
+      this.reset();
+      document.getElementById('fileName').textContent = '';
+
+      // Hide success message after 5 seconds
+      setTimeout(() => {
+        successMsg.style.display = 'none';
+      }, 5000);
+
+      // Scroll to top
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
+    // PROFILE BUTTON
+    document.querySelector('.profile-btn').addEventListener('click', function() {
+      alert('Profile menu would open here (logout, settings, etc.)');
+    });
+  </script>
+
+</body>
+</html>
