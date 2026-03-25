@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>eReport - Employee Dashboard</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+
   <style>
     * {
       margin: 0;
@@ -198,6 +199,81 @@
       font-size: 1rem;
       width: 20px;
       text-align: center;
+    }
+
+    /* SETTINGS MODAL */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.55);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 2000;
+    }
+
+    .modal-box {
+      background: #121624;
+      border: 1px solid #2d3244;
+      border-radius: 14px;
+      padding: 1.1rem;
+      width: 420px;
+      max-width: 95vw;
+      box-shadow: 0 12px 35px rgba(0, 0, 0, 0.35);
+      color: #f1f4fb;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.75rem;
+    }
+
+    .close-btn {
+      color: #ddd;
+      font-size: 1.18rem;
+      cursor: pointer;
+      padding: 0.25rem;
+      border-radius: 6px;
+      transition: background-color 0.2s ease;
+    }
+
+    .close-btn:hover {
+      background: rgba(255, 255, 255, 0.12);
+    }
+
+    .modal-title {
+      font-size: 1.1rem;
+      font-weight: 700;
+    }
+
+    .settings-input {
+      width: 100%;
+      padding: 0.65rem 0.75rem;
+      border-radius: 10px;
+      border: 1px solid #444c63;
+      background: #1d2235;
+      color: #f5f7ff;
+      margin-bottom: 0.8rem;
+    }
+
+    .settings-btn {
+      width: 100%;
+      padding: 0.85rem;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      background: #c0175d;
+      color: #fff;
+      font-weight: 600;
+      transition: transform 0.2s ease, background 0.2s ease;
+    }
+
+    .settings-btn:hover {
+      transform: translateY(-1px);
+      background: #a2154d;
     }
 
     /* CONTAINER */
@@ -699,12 +775,25 @@
 
     .record-header {
       display: grid;
-      grid-template-columns: 110px 130px 1fr 110px 40px;
+      grid-template-columns: minmax(115px, 180px) minmax(110px, 160px) minmax(220px, 1fr) auto 40px;
       align-items: center;
       padding: 16px 18px;
       cursor: pointer;
-      gap: 12px;
+      gap: 10px;
       transition: background 0.15s;
+      background: #fff;
+      border: 1px solid #dbd6cd;
+      border-radius: 8px;
+    }
+
+    .record-header span[data-meta] {
+      display: block;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-secondary);
+      margin-bottom: 1px;
     }
 
     .record-date {
@@ -712,6 +801,18 @@
       font-size: 12px;
       color: var(--text-secondary);
       white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .record-date::before {
+      content: 'Date';
+      display: block;
+      font-size: 10px;
+      color: var(--text-secondary);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      margin-bottom: 2px;
     }
 
     .record-id {
@@ -719,13 +820,39 @@
       font-size: 12px;
       color: var(--text-mono);
       white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .record-id::before {
+      content: 'ID';
+      display: block;
+      font-size: 10px;
+      color: var(--text-secondary);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      margin-bottom: 2px;
     }
 
     .record-title {
       font-size: 14px;
-      font-weight: 600;
+      font-weight: 650;
       color: var(--text-primary);
       letter-spacing: -0.01em;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      min-width: 0;
+    }
+
+    .record-title::before {
+      content: 'Issue';
+      display: block;
+      font-size: 10px;
+      color: var(--text-secondary);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      margin-bottom: 2px;
     }
 
     .status-badge {
@@ -734,12 +861,16 @@
       gap: 5px;
       font-family: 'IBM Plex Mono', monospace;
       font-size: 11px;
-      font-weight: 500;
+      font-weight: 700;
       letter-spacing: 0.04em;
       padding: 4px 10px;
-      border-radius: 2px;
+      border-radius: 8px;
       white-space: nowrap;
       justify-self: end;
+      text-transform: capitalize;
+      border: 1px solid rgba(0,0,0,0.1);
+      min-width: 86px;
+      text-align: center;
     }
 
     .status-badge::before {
@@ -760,6 +891,12 @@
       background: var(--rejected-bg);
     }
     .status-badge.rejected::before { background: var(--rejected); }
+
+    .status-badge.pending {
+      color: #b45309;
+      background: #fffbeb;
+    }
+    .status-badge.pending::before { background: #b45309; }
 
     .chevron {
       display: flex;
@@ -915,10 +1052,27 @@
       opacity: 0.5;
       cursor: not-allowed;
     }
+
+    /* Auth loading overlay */
+    #employeeAuthLoading {
+      position: fixed;
+      inset: 0;
+      z-index: 100000;
+      background: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Poppins', sans-serif;
+      color: #333;
+      font-size: 1rem;
+    }
   </style>
 </head>
 <body>
 
+  <div id="employeeAuthLoading">Checking your session…</div>
+
+  <div id="employeeMain" style="visibility: hidden;">
   <!-- NAVBAR -->
   <nav class="navbar">
     <div class="logo">
@@ -926,33 +1080,29 @@
       
     </div>
     <div class="navbar-actions">
-      <button class="notification-btn" title="Notifications">
+      <button class="notification-btn" title="Notifications" id="notificationBtn">
         <span class="notification-icon">🔔</span>
         <span class="notification-badge" id="notificationBadge">3</span>
       </button>
+      <div class="notification-panel" id="notificationPanel" style="display:none; position:absolute; top:60px; right:130px; width:300px; background:#fff; border:1px solid #e1e5e9; box-shadow:0 6px 16px rgba(0,0,0,.18); border-radius:10px; z-index:1000; color:#111;">
+        <div style="padding:12px; font-weight:600; border-bottom:1px solid #f1f3f5;">Notifications</div>
+        <div id="notificationItems" style="max-height:280px; overflow:auto;"></div>
+      </div>
       <div class="profile-dropdown">
         <button class="profile-btn" title="Profile" id="profileBtn">
           <span class="profile-icon">👤</span>
         </button>
         <div class="dropdown-menu" id="profileDropdown">
-          <div class="dropdown-item">
+          <div class="dropdown-item" id="profileMenuItem">
             <span class="dropdown-icon">👤</span>
             <span>My Profile</span>
           </div>
-          <div class="dropdown-item">
+          <div class="dropdown-item" id="settingsMenuItem">
             <span class="dropdown-icon">⚙️</span>
             <span>Settings</span>
           </div>
-          <div class="dropdown-item">
-            <span class="dropdown-icon">📊</span>
-            <span>Reports</span>
-          </div>
-          <div class="dropdown-item">
-            <span class="dropdown-icon">📞</span>
-            <span>Support</span>
-          </div>
           <div class="dropdown-divider"></div>
-          <div class="dropdown-item logout">
+          <div class="dropdown-item logout" id="logoutMenuItem">
             <span class="dropdown-icon">🚪</span>
             <span>Logout</span>
           </div>
@@ -960,6 +1110,23 @@
       </div>
     </div>
   </nav>
+
+  <!-- Settings Modal -->
+  <div class="modal-overlay" id="settingsModal" style="display:none;">
+    <div class="modal-box" style="width:420px;">
+      <div class="modal-header">
+        <div class="modal-title">Profile Settings</div>
+        <span class="close-btn" onclick="closeSettingsModal()">✕</span>
+      </div>
+
+      <div style="padding: 10px 0; color: #9ca3af;">Upload a profile picture to personalize your dashboard.</div>
+      <div style="display: flex; flex-direction: column; align-items: center; gap: 10px; margin-bottom: 14px;">
+        <img id="settingsProfilePreview" src="https://via.placeholder.com/120?text=Avatar" alt="Profile Preview" style="width:120px;height:120px;border-radius:50%;border:1px solid #444;object-fit:cover;" />
+        <input type="file" id="profilePicInput" accept="image/*" style="width:100%;" />
+        <button class="btn" style="width:100%;" id="saveProfilePicBtn">Save Picture</button>
+      </div>
+    </div>
+  </div>
 
   <!-- MAIN CONTAINER -->
   <div class="container">
@@ -1016,20 +1183,29 @@
         <span class="file-name" id="fileName"></span>
       </div>
 
+      <!-- ANONYMOUS OPTION -->
+      <div class="form-group" style="display:flex; align-items:center; gap:0.5rem; margin-bottom: 2rem;">
+        <input type="checkbox" id="isAnonymous" checked style="width:18px;height:18px;cursor:pointer;">
+        <label for="isAnonymous" style="font-size:0.9rem; color:#444; font-weight:500; cursor:pointer;">Submit Anonymously (Hide my identity from IT and HR)</label>
+      </div>
+
       <!-- SUBMIT BUTTON -->
-      <button type="submit" class="submit-btn">Submit a Report Ticket</button>
+      <button type="submit" class="submit-btn" id="submitBtn">Submit a Report Ticket</button>
 
     </form>
     </div>
 
     <!-- TRACKING VIEW -->
     <div class="view-container" id="trackingView">
-    
+      <div id="noTrackingMsg" style="text-align:center; padding: 3rem; color: #666; font-size: 1.1rem; display: none;">
+        You have no recent reports to track.
+      </div>
       
-      <div class="tracking-card">
+      <div class="tracking-card" id="trackingCard">
         <!-- STEPPER -->
+        <h3 id="trackingTitle" style="margin-bottom: 2rem; color: var(--text);">Latest Report Tracking</h3>
         <div class="stepper">
-          <div class="step completed">
+          <div class="step completed" id="trackStep1">
             <div class="step-icon">
               <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
                 <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
@@ -1041,11 +1217,11 @@
             </div>
             <div class="step-label">
               <div class="step-title">Complaint Request<br>On Queue</div>
-              <div class="step-time">03/24/2026 &nbsp; 14:30</div>
+              <div class="step-time" id="trackTime1">Pending</div>
             </div>
           </div>
 
-          <div class="step active">
+          <div class="step pending" id="trackStep2">
             <div class="step-icon">
               <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
                 <path d="M5 22h14"/>
@@ -1055,12 +1231,12 @@
               </svg>
             </div>
             <div class="step-label">
-              <div class="step-title">Complaint Request<br>On Progress</div>
-              <div class="step-time">03/24/2026 &nbsp; 15:45</div>
+              <div class="step-title">Complaint Request<br>In Progress</div>
+              <div class="step-time" id="trackTime2">Pending</div>
             </div>
           </div>
 
-          <div class="step pending">
+          <div class="step pending" id="trackStep3">
             <div class="step-icon">
               <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
                 <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
@@ -1069,8 +1245,8 @@
               </svg>
             </div>
             <div class="step-label">
-              <div class="step-title">Complaint Successfully<br>Approved</div>
-              <div class="step-time">Pending</div>
+              <div class="step-title" id="trackTitle3">Complaint<br>Resolved</div>
+              <div class="step-time" id="trackTime3">Pending</div>
             </div>
           </div>
         </div>
@@ -1080,16 +1256,13 @@
         <!-- MESSAGE -->
         <div class="message-box">
           <div class="message-icon">▶</div>
-          <p class="message-text">
+          <p class="message-text" id="trackMessage">
             We acknowledge your complaint and want to assure you that it is being given careful attention.
-            The status is currently <strong>In Progress</strong>, and our team is actively working toward resolution.
-            We appreciate your patience and understanding as we continue to address this matter, and we will
-            provide further updates once available.
           </p>
         </div>
 
         <!-- BUTTON -->
-        <button class="btn-follow" onclick="alert('Follow-up request submitted!')">
+        <button class="btn-follow" onclick="alert('Follow-up request feature is coming soon!')">
           Submit Follow up Request
         </button>
       </div>
@@ -1097,12 +1270,17 @@
     <!-- ── HISTORY VIEW ── -->
     <div class="view-container" id="historyView">
       <div class="history-container">
+      <div class="history-header">
+        <h1>History</h1>
+        <h2>Reports You Submitted</h2>
+      </div>
 
        
         <div class="filter-row">
           <button class="filter-btn active" id="filter-all"      onclick="filterRecords('all', this)">All</button>
           <button class="filter-btn"         id="filter-resolved" onclick="filterRecords('resolved', this)">Resolved</button>
           <button class="filter-btn"         id="filter-rejected" onclick="filterRecords('rejected', this)">Rejected</button>
+          <button class="filter-btn"         id="filter-pending"  onclick="filterRecords('pending', this)">Pending</button>
         </div>
 
         <div class="count-row">
@@ -1128,7 +1306,82 @@
 
       </div>
     </div>  </div>
+  </div>
 
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="/js/ereport-config.js"></script>
+  <script>
+    (async function employeeAuthBootstrap() {
+      const loading = document.getElementById("employeeAuthLoading");
+      const main = document.getElementById("employeeMain");
+
+      function devModeSkip() {
+        loading.style.display = "none";
+        main.style.visibility = "visible";
+        console.warn(
+          "eReport: Supabase not configured in /js/ereport-config.js — running employee dashboard without auth."
+        );
+      }
+
+      if (!window.ereportSupabaseConfigured || !window.ereportSupabaseConfigured()) {
+        devModeSkip();
+        return;
+      }
+
+      const sb = window.getSupabaseClient();
+      window.__ereportSb = sb;
+
+      const {
+        data: { session },
+      } = await sb.auth.getSession();
+
+      if (!session) {
+        window.location.href = "/login.html";
+        return;
+      }
+
+      const { data: profile, error: pErr } = await sb
+        .from("profiles")
+        .select("employee_id, role, full_name, email, must_change_password, password_changed_at")
+        .eq("employee_id", session.user.id)
+        .maybeSingle();
+
+      if (pErr || !profile) {
+        await sb.auth.signOut();
+        window.location.href = "/login.html";
+        return;
+      }
+
+      if (profile.role === "admin") {
+        window.location.href = "/admin-dashboard.html";
+        return;
+      }
+
+      if (profile.must_change_password) {
+        window.location.href = "/set-password.html";
+        return;
+      }
+
+      loading.style.display = "none";
+      main.style.visibility = "visible";
+      window.__ereportProfile = profile;
+      if (typeof loadTickets === 'function') {
+        loadTickets();
+        
+        // Listen to realtime changes immediately from the backend
+        window.__ereportSb.channel('tickets-realtime')
+          .on(
+            'postgres_changes',
+            { event: '*', schema: 'public', table: 'tickets', filter: `author_id=eq.${profile.id}` },
+            (payload) => {
+              console.log('Realtime Ticket Change Detected:', payload);
+              loadTickets(); // Refresh the dynamic tracker automatically
+            }
+          )
+          .subscribe();
+      }
+    })();
+  </script>
 
   <script>
     // ── FILE UPLOAD ──
@@ -1138,26 +1391,118 @@
     });
 
     // ── FORM SUBMISSION ──
-    document.getElementById('reportForm').addEventListener('submit', function(e) {
+    document.getElementById('reportForm').addEventListener('submit', async function(e) {
       e.preventDefault();
-      const successMsg = document.getElementById('successMessage');
-      successMsg.style.display = 'block';
-      this.reset();
-      document.getElementById('fileName').textContent = '';
-      setTimeout(() => { successMsg.style.display = 'none'; }, 5000);
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+      const submitBtn = document.getElementById('submitBtn');
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Submitting...';
+
+      try {
+        const type = document.getElementById('complaintType').value;
+        const text = document.getElementById('complaintText').value;
+        const isAnonymous = document.getElementById('isAnonymous').checked;
+
+        let evidenceUrl = null;
+        const fileInput = document.getElementById('uploadInput');
+        
+        if (fileInput.files.length > 0) {
+          const file = fileInput.files[0];
+          const fileName = `${Date.now()}_${file.name.replace(/[^a-zA-Z0-9.\-]/g, '')}`;
+          const filePath = `${window.__ereportProfile.id}/${fileName}`;
+          
+          const { data: uploadData, error: uploadError } = await window.__ereportSb.storage
+            .from('evidence')
+            .upload(filePath, file);
+
+          if (uploadError) throw uploadError;
+          evidenceUrl = filePath;
+        }
+
+        const { data, error } = await window.__ereportSb
+          .from('tickets')
+          .insert([{
+            author_id: window.__ereportProfile.id,
+            is_anonymous: isAnonymous,
+            complaint_type: type,
+            complaint_text: text,
+            evidence_url: evidenceUrl,
+            status: 'pending'
+          }]);
+
+        if (error) throw error;
+
+        const successMsg = document.getElementById('successMessage');
+        successMsg.style.display = 'block';
+        this.reset();
+        document.getElementById('fileName').textContent = '';
+        setTimeout(() => { successMsg.style.display = 'none'; }, 5000);
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        
+        // Refresh records and switch tracking view showing new item
+        await loadTickets();
+        toggleView('tracking');
+      } catch (err) {
+        console.error("Error submitting report:", err);
+        alert("Failed to submit report. See console for details.");
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Submit a Report Ticket';
+      }
     });
 
     // ── NOTIFICATION BUTTON ──
-    document.querySelector('.notification-btn').addEventListener('click', function() {
-      alert('You have 3 new notifications:\n• Report #CR-2026-0320 has been resolved\n• New system update available\n• Your report feedback requested');
-      // Hide badge after viewing
-      document.getElementById('notificationBadge').style.display = 'none';
+    const notifications = [
+      { id: 1, message: 'Report #CR-2026-0320 has been resolved', time: '2m ago', read: false },
+      { id: 2, message: 'New system update is available', time: '12m ago', read: false },
+      { id: 3, message: 'Your report feedback has been requested', time: '38m ago', read: false },
+    ];
+
+    function renderNotifications() {
+      const container = document.getElementById('notificationItems');
+      if (!container) return;
+
+      if (!notifications.length) {
+        container.innerHTML = '<div style="padding: 12px; color:#666;">No notifications.</div>';
+        return;
+      }
+
+      container.innerHTML = notifications
+        .map(n => `
+          <div style="padding: 10px 12px; border-bottom: 1px solid #f1f3f5; background:${n.read ? '#fdfdfd' : '#f7f8ff'};">
+            <div style="font-size:0.94rem;">${n.message}</div>
+            <small style="color:#777;">${n.time}</small>
+          </div>
+        `)
+        .join('');
+    }
+
+    const notificationBtn = document.getElementById('notificationBtn');
+    const notificationPanel = document.getElementById('notificationPanel');
+    const notificationBadge = document.getElementById('notificationBadge');
+
+    notificationBtn.addEventListener('click', () => {
+      renderNotifications();
+      notificationPanel.style.display = notificationPanel.style.display === 'block' ? 'none' : 'block';
+      notificationBadge.style.display = 'none';
+
+      notifications.forEach(n => (n.read = true));
+    });
+
+    document.addEventListener('click', (event) => {
+      const isToggle = notificationBtn.contains(event.target);
+      const isPanel = notificationPanel.contains(event.target);
+      const isProfile = document.querySelector('.profile-dropdown').contains(event.target);
+      if (!isToggle && !isPanel && !isProfile) {
+        notificationPanel.style.display = 'none';
+      }
     });
 
     // ── PROFILE DROPDOWN ──
     const profileBtn = document.getElementById('profileBtn');
     const profileDropdown = document.getElementById('profileDropdown');
+    const profileMenuItem = document.getElementById('profileMenuItem');
+    const settingsMenuItem = document.getElementById('settingsMenuItem');
+    const logoutMenuItem = document.getElementById('logoutMenuItem');
 
     profileBtn.addEventListener('click', function(e) {
       e.stopPropagation();
@@ -1171,35 +1516,63 @@
       }
     });
 
-    // Dropdown menu items functionality
-    document.querySelectorAll('.dropdown-item').forEach(item => {
-      item.addEventListener('click', function() {
-        const action = this.textContent.trim().toLowerCase();
-        
-        switch(action) {
-          case 'my profile':
-            alert('Profile page would open here');
-            break;
-          case 'settings':
-            alert('Settings page would open here');
-            break;
-          case 'reports':
-            alert('Reports dashboard would open here');
-            break;
-          case 'support':
-            alert('Support contact form would open here');
-            break;
-          case 'logout':
-            if (confirm('Are you sure you want to logout?')) {
-              alert('Logged out successfully');
-              // In a real app, this would redirect to login page
-            }
-            break;
-        }
-        
-        profileDropdown.classList.remove('show');
-      });
+    profileMenuItem?.addEventListener('click', function() {
+      alert('My Profile clicked. Coming soon.');
+      profileDropdown.classList.remove('show');
     });
+
+    settingsMenuItem?.addEventListener('click', function() {
+      document.getElementById('settingsModal').style.display = 'flex';
+      profileDropdown.classList.remove('show');
+    });
+
+    logoutMenuItem?.addEventListener('click', async function() {
+      if (!confirm('Are you sure you want to logout?')) return;
+      try {
+        if (window.__ereportSb) {
+          await window.__ereportSb.auth.signOut();
+        }
+      } catch (e) {
+        console.warn('Logout error', e);
+      }
+      window.location.href = '/login.html';
+    });
+
+    function closeSettingsModal() {
+      document.getElementById('settingsModal').style.display = 'none';
+    }
+
+    const profilePicInput = document.getElementById('profilePicInput');
+    const profilePreview = document.getElementById('settingsProfilePreview');
+    const saveProfilePicBtn = document.getElementById('saveProfilePicBtn');
+
+    if (profilePicInput && profilePreview) {
+      profilePicInput.addEventListener('change', (event) => {
+        const file = event.target.files[0];
+        if (!file) return;
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          profilePreview.src = e.target.result;
+          document.getElementById('profileBtn').style.backgroundImage = `url(${e.target.result})`;
+          document.getElementById('profileBtn').style.backgroundSize = 'cover';
+          document.getElementById('profileBtn').style.backgroundPosition = 'center';
+          document.getElementById('profileBtn').textContent = '';
+        };
+        reader.readAsDataURL(file);
+      });
+    }
+
+    if (saveProfilePicBtn) {
+      saveProfilePicBtn.addEventListener('click', () => {
+        if (!profilePicInput || !profilePicInput.files.length) {
+          alert('Select an image first.');
+          return;
+        }
+        alert('Profile picture saved successfully.');
+        closeSettingsModal();
+        // Optional: persist to backend here (e.g., Supabase Storage + user metadata update)
+      });
+    }
 
     // ── VIEW TOGGLE ──
     function toggleView(view) {
@@ -1215,120 +1588,109 @@
     }
 
     // ── HISTORY DATA ──
-    const records = [
-      {
-        date: '23/03/2026', id: 'CR-2026-0320',
-        title: 'Workplace Harassment Concern', status: 'resolved',
-        department: 'Human Resources', filedBy: 'Employee #4821',
-        resolution: 'Mediation conducted. Written warning issued to the respondent. Case closed.',
-        notes: 'Follow-up scheduled in 30 days to ensure no recurrence.'
-      },
-      {
-        date: '18/03/2026', id: 'CR-2026-0318',
-        title: 'Verbal Harassment Incident', status: 'rejected',
-        department: 'Operations', filedBy: 'Employee #3305',
-        resolution: 'Insufficient evidence to support the claim. Complaint dismissed.',
-        notes: 'Claimant may resubmit with additional documentation.'
-      },
-      {
-        date: '12/03/2026', id: 'CR-2026-0312',
-        title: 'Salary Release Delay', status: 'resolved',
-        department: 'Finance', filedBy: 'Employee #2274',
-        resolution: 'Payroll error identified and corrected. Back pay released on 14/03/2026.',
-        notes: 'Payroll team notified to prevent recurrence.'
-      },
-      {
-        date: '05/03/2026', id: 'CR-2026-0305',
-        title: 'Overtime Pay Discrepancy', status: 'rejected',
-        department: 'Operations', filedBy: 'Employee #1988',
-        resolution: 'Overtime hours disputed by timesheet records. Complaint not substantiated.',
-        notes: 'Employee advised to review DTR policy.'
-      },
-      {
-        date: '22/02/2026', id: 'CR-2026-0222',
-        title: 'Office Equipment Malfunction', status: 'resolved',
-        department: 'IT / Admin', filedBy: 'Employee #5510',
-        resolution: 'Faulty equipment replaced. Work continuity restored within 24 hours.',
-        notes: 'Equipment logged for end-of-life replacement cycle.'
-      },
-      {
-        date: '15/02/2026', id: 'CR-2026-0215',
-        title: 'Discrimination Complaint', status: 'resolved',
-        department: 'Human Resources', filedBy: 'Employee #3344',
-        resolution: 'Investigation completed. Training provided to involved parties.',
-        notes: 'Diversity awareness session scheduled for department.'
-      },
-      {
-        date: '08/02/2026', id: 'CR-2026-0208',
-        title: 'Safety Hazard Report', status: 'resolved',
-        department: 'Facilities', filedBy: 'Employee #6677',
-        resolution: 'Hazard identified and corrected. Safety inspection completed.',
-        notes: 'Monthly safety audits implemented.'
-      },
-      {
-        date: '01/02/2026', id: 'CR-2026-0201',
-        title: 'Performance Review Dispute', status: 'rejected',
-        department: 'Human Resources', filedBy: 'Employee #8899',
-        resolution: 'Review process followed standard procedures. No irregularities found.',
-        notes: 'Employee advised of appeal process.'
-      },
-      {
-        date: '25/01/2026', id: 'CR-2026-0125',
-        title: 'Workplace Bullying', status: 'resolved',
-        department: 'Human Resources', filedBy: 'Employee #1122',
-        resolution: 'Mediation successful. Behavior agreement signed.',
-        notes: 'Follow-up monitoring scheduled for 3 months.'
-      },
-      {
-        date: '18/01/2026', id: 'CR-2026-0118',
-        title: 'IT Support Delay', status: 'resolved',
-        department: 'IT / Admin', filedBy: 'Employee #4455',
-        resolution: 'Technical issue resolved. System access restored.',
-        notes: 'IT response time SLA reviewed and improved.'
-      },
-      {
-        date: '12/01/2026', id: 'CR-2026-0112',
-        title: 'Unauthorized Overtime', status: 'rejected',
-        department: 'Operations', filedBy: 'Employee #7788',
-        resolution: 'Timesheet records verified. No unauthorized overtime found.',
-        notes: 'Employee trained on time reporting procedures.'
-      },
-      {
-        date: '05/01/2026', id: 'CR-2026-0105',
-        title: 'Office Maintenance Issue', status: 'resolved',
-        department: 'Facilities', filedBy: 'Employee #2233',
-        resolution: 'Maintenance request fulfilled. Equipment repaired.',
-        notes: 'Preventive maintenance schedule updated.'
-      },
-      {
-        date: '28/12/2025', id: 'CR-2025-1228',
-        title: 'Holiday Pay Calculation Error', status: 'resolved',
-        department: 'Finance', filedBy: 'Employee #5566',
-        resolution: 'Payroll calculation corrected. Back pay issued.',
-        notes: 'Payroll system validation enhanced.'
-      },
-      {
-        date: '20/12/2025', id: 'CR-2025-1220',
-        title: 'Confidentiality Breach', status: 'resolved',
-        department: 'Human Resources', filedBy: 'Employee #9900',
-        resolution: 'Investigation completed. Security protocols reinforced.',
-        notes: 'Mandatory confidentiality training implemented.'
-      },
-      {
-        date: '15/12/2025', id: 'CR-2025-1215',
-        title: 'Equipment Theft', status: 'rejected',
-        department: 'Security', filedBy: 'Employee #3344',
-        resolution: 'Insufficient evidence to proceed with investigation.',
-        notes: 'Security camera footage reviewed. No suspicious activity found.'
-      },
-      {
-        date: '08/12/2025', id: 'CR-2025-1208',
-        title: 'Workplace Accident', status: 'resolved',
-        department: 'Safety', filedBy: 'Employee #6677',
-        resolution: 'Medical attention provided. Incident report filed.',
-        notes: 'Safety training session scheduled for affected department.'
+    let records = [];
+
+    function formatStatus(status) {
+      const normalized = (status || '').toLowerCase();
+      if (normalized === 'resolved') return 'Resolved';
+      if (normalized === 'rejected') return 'Rejected';
+      if (normalized === 'in_progress' || normalized === 'in progress' || normalized === 'inprogress') return 'In Progress';
+      if (normalized === 'pending') return 'Pending';
+      return normalized ? normalized.charAt(0).toUpperCase() + normalized.slice(1) : 'Unknown';
+    }
+
+    function formatComplaintType(type) {
+      const normalized = (type || '').toLowerCase();
+      const map = {
+        harassment: 'Harassment',
+        safety: 'Safety Violation',
+        salary: 'Salary Issue',
+        misconduct: 'Misconduct',
+        other: 'Other',
+      };
+      return map[normalized] || normalized.charAt(0).toUpperCase() + normalized.slice(1);
+    }
+
+    async function loadTickets() {
+      if (!window.__ereportSb || !window.__ereportProfile) return;
+
+      const { data, error } = await window.__ereportSb
+        .from('tickets')
+        .select(`id, created_at, complaint_type, status, resolution, notes, complaint_text`)
+        .eq('author_id', window.__ereportProfile.id)
+        .order('created_at', { ascending: false });
+
+      if (error) {
+        console.error("Error fetching tickets:", error);
+        return;
       }
-    ];
+
+      records = data.map(t => {
+        const d = new Date(t.created_at);
+        const statusLabel = formatStatus(t.status);
+        return {
+          date: d.toLocaleDateString() + ' ' + d.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}),
+          id: t.id,
+          title: formatComplaintType(t.complaint_type),
+          statusRaw: (t.status || 'pending').toLowerCase(),
+          status: statusLabel,
+          department: 'General',
+          filedBy: window.__ereportProfile.full_name || 'Me',
+          complaint_text: t.complaint_text,
+          resolution: t.resolution || 'Pending review.',
+          notes: t.notes || ''
+        };
+      });
+
+      // Update Tracking View
+      if (data.length === 0) {
+        document.getElementById('noTrackingMsg').style.display = 'block';
+        document.getElementById('trackingCard').style.display = 'none';
+      } else {
+        document.getElementById('noTrackingMsg').style.display = 'none';
+        document.getElementById('trackingCard').style.display = 'block';
+
+        const latest = data[0];
+        const d = new Date(latest.created_at);
+        const timeStr = d.toLocaleDateString() + ' ' + d.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+
+        document.getElementById('trackingTitle').textContent = `Tracking Report: ${latest.complaint_type}`;
+        document.getElementById('trackTime1').textContent = timeStr;
+
+        const s1 = document.getElementById('trackStep1');
+        const s2 = document.getElementById('trackStep2');
+        const s3 = document.getElementById('trackStep3');
+        const s3Title = document.getElementById('trackTitle3');
+        const msg = document.getElementById('trackMessage');
+
+        s1.className = 'step completed';
+        s2.className = 'step pending';
+        s3.className = 'step pending';
+        s3Title.innerHTML = 'Complaint<br>Resolved';
+
+        if (latest.status === 'pending') {
+          s1.className = 'step active';
+          msg.innerHTML = `Your report is <strong>On Queue</strong>. We'll review it shortly.`;
+        } else if (latest.status === 'in_progress') {
+          s2.className = 'step active';
+          msg.innerHTML = `Your report is currently <strong>In Progress</strong>. Our team is actively working toward resolution.`;
+        } else if (latest.status === 'resolved') {
+          s2.className = 'step completed';
+          s3.className = 'step completed';
+          msg.innerHTML = `Your report has been <strong>Resolved</strong>. Resolution: ${latest.resolution || ''}`;
+        } else if (latest.status === 'rejected') {
+          s2.className = 'step completed';
+          s3.className = 'step completed';
+          s3Title.innerHTML = 'Complaint<br>Rejected';
+          msg.innerHTML = `Your report has been <strong>Rejected</strong>. Reason: ${latest.resolution || ''}`;
+        }
+      }
+
+      // Re-render records if on history view
+      if (document.getElementById('historyView').classList.contains('active')) {
+        renderRecords(currentFilter, currentPage);
+      }
+    }
 
     let currentFilter = 'all';
     let currentPage = 1;
@@ -1345,7 +1707,7 @@
     function renderRecords(filter, page = 1) {
       const list = document.getElementById('records-list');
       const countLabel = document.getElementById('count-label');
-      const filtered = filter === 'all' ? records : records.filter(r => r.status === filter);
+      const filtered = filter === 'all' ? records : records.filter(r => r.statusRaw === filter);
       
       // Calculate pagination
       const totalItems = filtered.length;
@@ -1355,6 +1717,13 @@
       const pageItems = filtered.slice(startIndex, endIndex);
       
       // Update count label with page info
+      if (totalItems === 0) {
+        countLabel.textContent = 'No records found.';
+        list.innerHTML = '<div style="padding: 22px; border: 1px solid #ccc; border-radius: 8px; background: #fff; color: #555;">No report history available yet. Submit your first report to see it here.</div>';
+        renderPagination(0, 0);
+        return;
+      }
+
       const showingStart = startIndex + 1;
       const showingEnd = Math.min(endIndex, totalItems);
       countLabel.textContent = `Showing ${showingStart}-${showingEnd} of ${totalItems} record${totalItems !== 1 ? 's' : ''}`;
@@ -1368,7 +1737,7 @@
             <span class="record-date">${r.date}</span>
             <span class="record-id">${r.id}</span>
             <span class="record-title">${r.title}</span>
-            <span class="status-badge ${r.status}">${r.status.charAt(0).toUpperCase() + r.status.slice(1)}</span>
+            <span class="status-badge ${r.statusRaw}">${r.status}</span>
             <span class="chevron">
               <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
                 <path d="M3 5L7 9L11 5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
@@ -1388,6 +1757,9 @@
               </div>
               <div class="detail-field">
                 <label>Status</label><p>${r.status.charAt(0).toUpperCase() + r.status.slice(1)}</p>
+              </div>
+              <div class="detail-field full">
+                <label>Complaint</label><p>${r.complaint_text}</p>
               </div>
               <div class="detail-field full">
                 <label>Resolution</label><p>${r.resolution}</p>

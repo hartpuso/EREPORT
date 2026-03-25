@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>eReport Login</title>
   <script src="https://cdn.tailwindcss.com"></script>
+
 </head>
 
 <body class="min-h-screen flex items-center justify-center" style="background: url('/backgroundshertified.png') center/cover no-repeat;">
@@ -18,20 +19,35 @@
     </div>
 
     <!-- FORM -->
-    <form>
+    <form id="loginForm" autocomplete="off">
+      <p id="loginError" class="hidden text-sm text-red-600 mb-3" role="alert"></p>
       <!-- EMAIL -->
-      <label class="text-sm text-gray-600">Email</label>
+      <label class="text-sm text-gray-600" for="loginEmail">Email</label>
       <input 
+        id="loginEmail"
         type="email" 
-        placeholder="Value"
+        name="email"
+        autocomplete="off"
+        autocorrect="off"
+        autocapitalize="off"
+        spellcheck="false"
+        placeholder="you@company.com"
+        required
         class="w-full mt-1 mb-4 px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-400"
       />
 
       <!-- PASSWORD -->
-      <label class="text-sm text-gray-600">Password</label>
+      <label class="text-sm text-gray-600" for="loginPassword">Password</label>
       <input 
+        id="loginPassword"
         type="password" 
-        placeholder="Value"
+        name="password"
+        autocomplete="new-password"
+        autocorrect="off"
+        autocapitalize="off"
+        spellcheck="false"
+        placeholder="••••••••"
+        required
         class="w-full mt-1 mb-2 px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-400"
       />
 
@@ -42,9 +58,10 @@
 
       <!-- BUTTON -->
       <button 
+        id="loginSubmit"
         type="submit"
         class="w-full mt-6 bg-[#0B0F2F] text-white py-2 rounded-lg 
-        hover:opacity-90 transition shadow-md">
+        hover:opacity-90 transition shadow-md disabled:opacity-50">
         Sign In
       </button>
 
@@ -59,6 +76,105 @@
     </form>
 
   </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="/js/ereport-config.js"></script>
+  <script>
+    (function () {
+      const errEl = document.getElementById("loginError");
+      const form = document.getElementById("loginForm");
+      const btn = document.getElementById("loginSubmit");
+
+      // Clear any autofilled values on load
+      window.addEventListener('load', () => {
+        document.getElementById("loginEmail").value = "";
+        document.getElementById("loginPassword").value = "";
+      });
+
+      function showErr(msg) {
+        errEl.textContent = msg;
+        errEl.classList.remove("hidden");
+      }
+
+      form.addEventListener("submit", async function (e) {
+        e.preventDefault();
+        errEl.classList.add("hidden");
+
+        if (!window.ereportSupabaseConfigured || !window.ereportSupabaseConfigured()) {
+          showErr("Configure /public/js/ereport-config.js with your Supabase URL and anon key.");
+          return;
+        }
+
+        const sb = window.getSupabaseClient();
+
+        const email = document.getElementById("loginEmail").value.trim();
+        const password = document.getElementById("loginPassword").value;
+
+        btn.disabled = true;
+        const { data, error } = await sb.auth.signInWithPassword({ email, password });
+        btn.disabled = false;
+
+        if (error) {
+          showErr(error.message || "Sign in failed.");
+          return;
+        }
+
+        const userId = data.user.id;
+        let { data: profile, error: pErr } = await sb
+          .from("profiles")
+          .select("role, must_change_password")
+          .eq("employee_id", userId)
+          .maybeSingle();
+
+        if (pErr) {
+          showErr(
+            "Could not read profile: " +
+              (pErr.message || pErr.code || "unknown error") +
+              ". Check Table Editor → profiles and RLS policies."
+          );
+          await sb.auth.signOut();
+          return;
+        }
+
+        if (!profile) {
+          const meta = data.user.user_metadata || {};
+          const role =
+            meta.role === "admin" ? "admin" : meta.role === "hr" ? "hr" : "employee";
+          const { error: insErr } = await sb.from("profiles").insert({
+            employee_id: userId,
+            email: data.user.email,
+            full_name: meta.full_name || meta.name || "",
+            role: role,
+            must_change_password: true,
+            password_changed_at: null,
+          });
+          if (insErr) {
+            showErr(
+              "No profile row yet. Either run SQL in Supabase (see project migration " +
+                "profiles_insert_own) or insert manually: " +
+                (insErr.message || insErr.code || "insert failed")
+            );
+            await sb.auth.signOut();
+            return;
+          }
+          profile = { role: role, must_change_password: true };
+        }
+
+        if (profile.must_change_password) {
+          window.location.href = "/set-password.html";
+          return;
+        }
+
+        if (profile.role === "admin") {
+          window.location.href = "/admin-dashboard.html";
+        } else if (profile.role === "hr") {
+          window.location.href = "/hr-dashboard.html";
+        } else {
+          window.location.href = "/employee-dashboard.html";
+        }
+      });
+    })();
+  </script>
 
 </body>
 </html>

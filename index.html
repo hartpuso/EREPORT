@@ -8,7 +8,6 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <!-- Custom Tailwind config override for smoother whites and modern feel -->
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap');
     
     * {
       font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
@@ -52,37 +51,37 @@
 
     /* Brand accent color */
     .accent-color {
-      color: #1a1a2e;
+      color: #C52E7F;
     }
 
     .accent-bg {
-      background-color: #1a1a2e;
+      background: linear-gradient(135deg, #C52E7F 0%, #00032D 100%);
     }
 
     .accent-border {
-      border-color: #1a1a2e;
+      border-color: #C52E7F;
     }
 
     .accent-gradient {
-      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+      background: linear-gradient(90deg, #C52E7F 0%, #00032D 32.7%, #00032D 100%);
     }
   </style>
 </head>
 <body class="bg-white text-slate-800 antialiased">
 
-  <!-- ========== MODERN NAVIGATION (white-dominant, minimal) ========== -->
+  <!-- ========== MODERN NAVIGATION (brand colors) ========== -->
   <nav class="sticky top-0 z-50 w-full glass-nav border-b border-slate-100" style="background: linear-gradient(90deg, #C52E7F 0%, #00032D 32.69%, #00032D 100%);">
     <div class="max-w-6xl mx-auto px-6 sm:px-8 py-4 flex items-center justify-between">
-      <!-- Logo + Brand (clean) -->
+      <!-- Logo + Brand -->
       <div class="flex items-center gap-3">
-      
+       
         <span class="text-2xl font-bold tracking-tight text-white">eReport</span>
       </div>
       
-      <!-- Navigation links + About (only about nav) -->
+      <!-- Navigation links + About -->
       <div class="flex items-center gap-6 sm:gap-8">
-        <a href="#" onclick="window.scrollTo({top: 0, behavior: 'smooth'}); return false;" class="text-white hover:text-gray-300 font-medium text-sm sm:text-base transition-colors duration-200 relative after:absolute after:bottom-0 after:left-0 after:h-[2px] after:w-0 after:bg-white after:transition-all hover:after:w-full">Home</a>
-        <a href="#about" class="text-white hover:text-gray-300 font-medium text-sm sm:text-base transition-colors duration-200 relative after:absolute after:bottom-0 after:left-0 after:h-[2px] after:w-0 after:bg-white after:transition-all hover:after:w-full">About</a>
+        <a href="#" onclick="window.scrollTo({top: 0, behavior: 'smooth'}); return false;" class="text-white hover:text-pink-200 font-medium text-sm sm:text-base transition-colors duration-200 relative after:absolute after:bottom-0 after:left-0 after:h-[2px] after:w-0 after:bg-pink-300 after:transition-all hover:after:w-full">Home</a>
+        <a href="#about" class="text-white hover:text-pink-200 font-medium text-sm sm:text-base transition-colors duration-200 relative after:absolute after:bottom-0 after:left-0 after:h-[2px] after:w-0 after:bg-pink-300 after:transition-all hover:after:w-full">About</a>
        
       </div>
     </div>
@@ -95,7 +94,7 @@
         <div class="max-w-3xl mx-auto text-center">
           
           <h1 class="text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight text-slate-900 leading-[1.2]">
-            Smart Reporting <br class="hidden sm:block"> Made <span class="bg-gradient-to-r from-slate-800 to-slate-600 bg-clip-text text-transparent">Simple & Secure</span>
+            Smart Reporting <br class="hidden sm:block"> Made <span class="bg-gradient-to-r from-[#C52E7F] to-[#00032D] bg-clip-text text-transparent">Simple & Secure</span>
           </h1>
           
           <p class="mt-6 text-lg md:text-xl text-slate-500 max-w-2xl mx-auto leading-relaxed">
@@ -103,7 +102,7 @@
           </p>
           
           <div class="mt-10 flex flex-col sm:flex-row gap-4 justify-center">
-            <button onclick="goToLogin()" class="inline-flex items-center justify-center gap-2 px-8 py-3.5 rounded-xl accent-bg text-white font-semibold shadow-md hover:shadow-lg transition-all duration-200 text-base" style="background-color: #1a1a2e;">
+            <button onclick="goToLogin()" class="inline-flex items-center justify-center gap-2 px-8 py-3.5 rounded-xl text-white font-semibold shadow-md hover:shadow-lg transition-all duration-200 text-base" style="background: linear-gradient(135deg, #C52E7F 0%, #00032D 100%);">
               Get Started
               <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
                 <path fill-rule="evenodd" d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z" clip-rule="evenodd" />
@@ -121,8 +120,8 @@
         
         <!-- Feature Card 1 -->
         <div class="bg-white rounded-2xl p-6 modern-card border border-slate-100 transition-all">
-          <div class="w-12 h-12 rounded-xl bg-slate-100 flex items-center justify-center mb-5">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-slate-700" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
+          <div class="w-12 h-12 rounded-xl flex items-center justify-center mb-5" style="background: linear-gradient(135deg, #C52E7F 0%, #00032D 100%);">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
               <path stroke-linecap="round" stroke-linejoin="round" d="M12 15v2m-6-4h12a2 2 0 002-2v-4a2 2 0 00-2-2H6a2 2 0 00-2 2v4a2 2 0 002 2zm10 4H8a2 2 0 00-2 2v4a2 2 0 002 2h8a2 2 0 002-2v-4a2 2 0 00-2-2z" />
             </svg>
           </div>
@@ -132,8 +131,8 @@
         
         <!-- Feature Card 2 -->
         <div class="bg-white rounded-2xl p-6 modern-card border border-slate-100 transition-all">
-          <div class="w-12 h-12 rounded-xl bg-slate-100 flex items-center justify-center mb-5">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-slate-700" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
+          <div class="w-12 h-12 rounded-xl flex items-center justify-center mb-5" style="background: linear-gradient(135deg, #C52E7F 0%, #00032D 100%);">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
               <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
             </svg>
           </div>
@@ -143,9 +142,9 @@
         
         <!-- Feature Card 3 -->
         <div class="bg-white rounded-2xl p-6 modern-card border border-slate-100 transition-all">
-          <div class="w-12 h-12 rounded-xl bg-slate-100 flex items-center justify-center mb-5">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-slate-700" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M12 11c0 1.5-1.5 2.5-3 2.5s-3-1-3-2.5m12 0c0 1.5-1.5 2.5-3 2.5s-3-1-3-2.5m-3 7.5h6M4 8h16a2 2 0 012 2v8a2 2 0 01-2 2H4a2 2 0 01-2-2v-8a2 2 0 012-2z" />
+          <div class="w-12 h-12 rounded-xl flex items-center justify-center mb-5" style="background: linear-gradient(135deg, #C52E7F 0%, #00032D 100%);">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M12 11c0 1.5-1.5 2.5-3 2.5s-3-1 3-2.5m12 0c0 1.5-1.5 2.5-3 2.5s-3-1-3-2.5m-3 7.5h6M4 8h16a2 2 0 012 2v8a2 2 0 01-2 2H4a2 2 0 01-2-2v-8a2 2 0 012-2z" />
             </svg>
           </div>
           <h3 class="text-xl font-bold text-slate-800 mb-2">Built on Trust</h3>
@@ -217,7 +216,7 @@
         <!-- Brand Column -->
         <div>
           <div class="flex items-center gap-2 mb-4">
-            <div class="w-8 h-8 rounded-lg flex items-center justify-center" style="background-color: #1a1a2e;">
+            <div class="w-8 h-8 rounded-lg flex items-center justify-center" style="background: linear-gradient(135deg, #C52E7F 0%, #00032D 100%);">
               <span class="text-white font-bold text-sm">eR</span>
             </div>
             <span class="font-bold text-lg text-slate-800">eReport</span>
